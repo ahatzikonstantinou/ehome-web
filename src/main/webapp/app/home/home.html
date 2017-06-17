@@ -1,0 +1,46 @@
+<div ng-cloak>
+    <!--<div class="row">
+        <div class="col-md-4">
+            <span class="hipster img-responsive img-rounded"></span>
+        </div>
+        <div class="col-md-8">
+            <h1 data-translate="home.title">Welcome, Java Hipster!</h1>
+            <p class="lead" data-translate="home.subtitle">This is your homepage</p>
+
+            <div>
+
+            </div>
+
+        </div>
+    </div>-->
+    <div ng-repeat="h in vm.houses" ng-init="houseIndex = $index">
+        <div class="well">
+            <label class="house">{{h.name}}</label>
+            <button type="button" class="btn btn-link btn-xs" ng-click="vm.isCollapsed[$index].house = !vm.isCollapsed[$index].house">
+                <span class="glyphicon glyphicon-chevron-down" ng-if="vm.isCollapsed[$index].house"></span>
+                <span class="glyphicon glyphicon-chevron-up" ng-if="!vm.isCollapsed[$index].house"></span>
+            </button>        
+            <span class="summary" ng-if="h.floors.length == 1">({{h.floors[0].name}})</span>    
+            <div uib-collapse="vm.isCollapsed[$index].house">
+                <div ng-repeat="f in h.floors">
+                    <div>                        
+                        <div ng-if="h.floors.length > 1">
+                            <label class="floor">{{f.name}}</label>
+                            <button type="button" class="btn btn-link btn-xs" ng-click="vm.isCollapsed[houseIndex].floor[$index] = !vm.isCollapsed[houseIndex].floor[$index]">
+                                <span class="glyphicon glyphicon-chevron-down" ng-if="vm.isCollapsed[houseIndex].floor[$index]"></span>
+                                <span class="glyphicon glyphicon-chevron-up" ng-if="!vm.isCollapsed[houseIndex].floor[$index]"></span>
+                            </button>            
+                        </div>
+                        <div uib-collapse="vm.isCollapsed[houseIndex].floor[$index]">
+                            <div ng-repeat="r in f.rooms">
+                                <div>
+                                    <label class="room">{{r.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
