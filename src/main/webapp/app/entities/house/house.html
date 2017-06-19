@@ -10,6 +10,7 @@
     </button>
     <span class="summary" ng-if="h.floors.length == 1">({{h.floors[0].name}})</span>
     <div style="display: inline">
+        <toggle ng-model="h.filters.DOOR" on="<span class='mdi mdi-glassdoor'></span>" off="<i class='mdi mdi-glassdoor'></i>">
         <button type="toggle" class="btn btn-link btn-xs">
             <span class="mdi mdi-glassdoor"/>
         </button>
