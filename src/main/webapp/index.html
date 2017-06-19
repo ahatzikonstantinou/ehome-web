@@ -10,9 +10,11 @@
     <!-- Put favicon.ico and apple-touch-icon.png in the root directory -->
     <!--ahat: added the following link to force refresh of the favicon. From https://immense.net/force-update-cached-files-images-favicon/-->
     <link rel="shortcut icon" href="http://localhost:8081/favicon.ico?ver=2.0" />
+    <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.min.css">
     <!-- build:css content/css/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
     <!-- endinject -->
     <!-- endbuild -->
@@ -58,6 +60,7 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/messageformat/messageformat.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -100,12 +103,27 @@
     <script src="app/layouts/error/error.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
+    <script src="app/entities/room/room-directive.js"></script>
+    <script src="app/entities/opening/opening-directive.js"></script>
     <script src="app/entities/mqtt-item/mqtt-item-dialog.controller.js"></script>
     <script src="app/entities/mqtt-item/mqtt-item-detail.controller.js"></script>
     <script src="app/entities/mqtt-item/mqtt-item-delete-dialog.controller.js"></script>
     <script src="app/entities/mqtt-item/mqtt-item.state.js"></script>
     <script src="app/entities/mqtt-item/mqtt-item.service.js"></script>
     <script src="app/entities/mqtt-item/mqtt-item.controller.js"></script>
+    <script src="app/entities/items/window2r-directive.js"></script>
+    <script src="app/entities/items/window1r-directive.js"></script>
+    <script src="app/entities/items/temphum-directive.js"></script>
+    <script src="app/entities/items/roller-directive.js"></script>
+    <script src="app/entities/items/light-directive.js"></script>
+    <script src="app/entities/items/door2r-directive.js"></script>
+    <script src="app/entities/items/door1-directive.js"></script>
+    <script src="app/entities/items/cover-directive.js"></script>
+    <script src="app/entities/items/camera-directive.js"></script>
+    <script src="app/entities/items/alarm-directive.js"></script>
+    <script src="app/entities/item/item-directive.js"></script>
+    <script src="app/entities/house/house-directive.js"></script>
+    <script src="app/entities/floor/floor-directive.js"></script>
     <script src="app/entities/entity.state.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>

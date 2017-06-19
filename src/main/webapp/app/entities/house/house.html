@@ -1,0 +1,46 @@
+<div>
+    <label class="house">{{h.name}}</label>
+    <button type="button" class="btn btn-link btn-xs" ng-click="isCollapsed.house = !isCollapsed.house">
+        <span class="mdi mdi-chevron-down" ng-if="isCollapsed.house"></span>
+        <span class="mdi mdi-chevron-up" ng-if="!isCollapsed.house"></span>
+    </button>
+    <button type="button" class="btn btn-link btn-xs" ng-click="expandAllChildren( {house: h, expand: isCollapsed.allChildrenExpanded } )">
+        <span class="mdi mdi-chevron-double-down" ng-if="!isCollapsed.allChildrenExpanded"></span>
+        <span class="mdi mdi-chevron-double-up" ng-if="isCollapsed.allChildrenExpanded"></span>
+    </button>
+    <span class="summary" ng-if="h.floors.length == 1">({{h.floors[0].name}})</span>
+    <div style="display: inline">
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-glassdoor"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-window-open"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-lightbulb"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-thermometer"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-blinds"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-alarm"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-grid"/>
+        </button>
+        <button type="toggle" class="btn btn-link btn-xs">
+            <span class="mdi mdi-camcorder"/>
+        </button>        
+    </div>
+    <div uib-collapse="isCollapsed.house">
+        <div ng-repeat="f in h.floors">
+            <floor floor='f' show-label="h.floors.length > 1" is-collapsed="isCollapsed.floor[$index]"/>
+        </div>
+        <div ng-repeat="i in h.items">
+            <item item='i'/>
+        </div>
+    </div>
+</div>

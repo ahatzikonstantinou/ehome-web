@@ -15,7 +15,8 @@
     </div>-->
     <div ng-repeat="h in vm.houses" ng-init="houseIndex = $index">
         <div class="well">
-            <label class="house">{{h.name}}</label>
+            <house house="h" is-collapsed="vm.isCollapsed[houseIndex]" expand-all-children="vm.expandAllChildren( house, expand )"/>
+            <!--<label class="house">{{h.name}}</label>
             <button type="button" class="btn btn-link btn-xs" ng-click="vm.isCollapsed[$index].house = !vm.isCollapsed[$index].house">
                 <span class="glyphicon glyphicon-chevron-down" ng-if="vm.isCollapsed[$index].house"></span>
                 <span class="glyphicon glyphicon-chevron-up" ng-if="!vm.isCollapsed[$index].house"></span>
@@ -40,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
