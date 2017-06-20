@@ -8,7 +8,7 @@
     </div>
     <div ng-if="!isCollapsed.floor || !showLabel">
         <div ng-repeat="r in f.rooms">
-            <room room='r' show-label="f.rooms.length > 1" is-collapsed="isCollapsed.room[$index]"/>             
+            <room room='r' show-label="f.rooms.length > 1" is-collapsed="isCollapsed.room[$index]" filter="filter"/>             
         </div>
     </div>
 </div>

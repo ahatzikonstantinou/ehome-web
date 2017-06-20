@@ -3,14 +3,15 @@
 
     angular
         .module('eHomeApp')
-        .directive( 'cover', function()
+        .directive( 'window1', function()
         {
-            return {                
+            return {
+                
                 restrict: 'E',
                 scope: { 
                     i: '=item'
                 },
-                templateUrl: '/app/entities/items/cover.html'
+                templateUrl: '/app/entities/items/window1.html'
             };
         }
         );

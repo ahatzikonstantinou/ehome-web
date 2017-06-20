@@ -3,7 +3,7 @@
 
     angular
         .module('eHomeApp')
-        .directive( 'roller', function()
+        .directive( 'roller1auto', function()
         {
             return {
                 
@@ -11,7 +11,7 @@
                 scope: { 
                     i: '=item'
                 },
-                templateUrl: '/app/entities/items/roller.html'
+                templateUrl: '/app/entities/items/roller1_auto.html'
             };
         }
         );

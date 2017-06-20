@@ -1,0 +1,6 @@
+<div style="overflow: auto;">
+    <span class="mdi mdi-blinds"/>{{i.name}}
+    <div class="state-container">
+        <span class="state" ng-class="{ 'warning': i.state == 'OPEN', 'info': i.state == 'CLOSED' }">{{i.state.main}}</span>
+    </div>
+</div>

@@ -6,10 +6,11 @@
         .directive( 'item', function()
         {
             return {
-                
+                transclude: true,
                 restrict: 'E',
                 scope: { 
-                    i: '=item'
+                    i: '=item',
+                    filter: '='
                 },
                 templateUrl: '/app/entities/item/item.html'
             };

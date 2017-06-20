@@ -1,3 +1,10 @@
-<div>
-    <span class="mdi mdi-glassdoor"/>{{i.name}} 2 panels with recline
+<div style="overflow: auto;">
+    <span class="mdi mdi-glassdoor">{{i.name}}</span>
+        <div class="state-container">
+            <span class="state" ng-class="{ 'warning': i.state.left == 'OPEN', 'info': i.state.left == 'CLOSED' }">{{i.state.left}}</span>
+            <span class="state" ng-class="{ 'warning': i.state.right == 'OPEN', 'info': i.state.right == 'CLOSED' }">{{i.state.right}}</span>
+            <span class="state" ng-class="{ 'warning': i.state.recline == 'OPEN', 'info': i.state.recline == 'CLOSED' }">
+                {{i.state.recline == 'OPEN' ? 'RECLINED' : i.state.recline }}
+            </span>
+        </div>
 </div>

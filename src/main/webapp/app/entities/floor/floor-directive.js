@@ -11,7 +11,8 @@
                 scope: { 
                     f: '=floor',
                     showLabel: '=',
-                    isCollapsed: '='
+                    isCollapsed: '=',
+                    filter: '='
                 },
                 templateUrl: '/app/entities/floor/floor.html'
             };

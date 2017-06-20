@@ -1,3 +1,11 @@
-<div>
-    <span class="mdi mdi-window-open"/>{{i.name}}
+
+<div style="overflow: auto;">
+    <span class="mdi mdi-window-open">{{i.name}}</span>
+    <div class="state-container">
+        <span class="state" ng-class="{ 'warning': i.state.main == 'OPEN', 'info': i.state.main == 'CLOSED' }">{{i.state.main}}</span>
+        <span class="state" ng-class="{ 'warning': i.state.recline == 'OPEN', 'info': i.state.recline == 'CLOSED' }">
+            {{i.state.recline == 'OPEN' ? 'RECLINED' : i.state.recline }}
+        </span>
+    </div>
+
 </div>

@@ -1,3 +1,53 @@
+.state-container
+{
+    float:right;
+    margin:4px 0px 4px 4px;
+    cursor: default;
+}
+
+.state
+{
+    padding: 3px 5px 3px 5px;
+    border-radius: 4px;
+    color: white;
+}
+
+.state.info
+{
+    background-color: #5bc0de;
+    color: #fff
+}
+
+.state.warning
+{
+    background-color: #f0ad4e;
+    color: #fff
+}
+
+.temperature
+{
+    margin: 8px;    
+    padding: 4px;
+    border-radius: 4px;
+    background-color: #ff2;
+    color: #522;
+}
+
+.humidity
+{
+    margin-left: 2px;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: #aaf;
+    color: white;
+}
+
+.filters-bar
+{
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
 item div
 {
     margin-bottom: 10px;
@@ -5,14 +55,14 @@ item div
 
 .item > div
 {
-    font-size: 11px;
+    font-size: 13px;
     vertical-align: top;
     line-height: normal;
 }
 
 label.house
 {
-    font-size: 14px;
+    font-size: 18px;
 }
 
 house > div
@@ -29,15 +79,16 @@ room > div
 {
     margin-left: 5px;
 }
+
 label.floor
 {
-    font-size: 13px;
+    font-size: 16px;
     /*font-weight: normal;*/
 }
 
 label.room
 {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: normal;
 }
 

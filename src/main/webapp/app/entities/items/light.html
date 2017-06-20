@@ -1,3 +1,8 @@
-<div>
-    <span class="mdi mdi-lightbulb"/>{{i.name}}
+<div style="overflow: auto;">
+    <span class="mdi mdi-lightbulb">{{i.name}}</span>
+        <div style="float:right">
+            <button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.state == 'ON', 'btn-info': i.state == 'OFF' }" ng-click="i.state == 'ON' ? i.state = 'OFF' : i.state = 'ON'">
+                {{i.state}}
+            </button>
+        </div>
 </div>

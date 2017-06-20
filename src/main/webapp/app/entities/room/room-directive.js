@@ -11,7 +11,8 @@
                 scope: { 
                     r: '=room',
                     showLabel: '=',
-                    isCollapsed: '='
+                    isCollapsed: '=',
+                    filter: '='
                 },
                 templateUrl: '/app/entities/room/room.html'
             };

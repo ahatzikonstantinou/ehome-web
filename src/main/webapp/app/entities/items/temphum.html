@@ -1,3 +1,7 @@
-<div>
+<div style="overflow: auto;">
     <span class="mdi mdi-thermometer"/>{{i.name}}
+    <div class="state-container">
+        <span class="temperature mdi mdi-thermometer-lines">{{i.state.temperature}}°C</span>
+        <span class="humidity mdi mdi-water">{{i.state.humidity}}%</span>
+    </div>
 </div>
