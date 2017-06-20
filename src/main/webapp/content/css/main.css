@@ -1,6 +1,6 @@
 .rzslider
 {
-    margin: 5px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 .rzslider .rz-pointer 
@@ -102,8 +102,9 @@ floor > div
 
 room > div
 {
-    margin-left: 5px;
+    margin-left: 5px;        
 }
+    
 
 label.floor
 {
@@ -113,8 +114,15 @@ label.floor
 
 label.room
 {
+    padding: 2px 8px 2px 8px;
     font-size: 14px;
     font-weight: normal;
+    border-radius: 3px;
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 1px;
+    /*background-color: #ddd;*/
+    color:#777;
 }
 
 /* ahat: used when a house has only one floor, so the floor name is displayed next to the house*/
