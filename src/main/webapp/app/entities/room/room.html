@@ -2,8 +2,8 @@
     <div ng-if="showLabel">
         <label class="room">{{r.name}}</label>
         <button type="button" class="btn btn-link btn-xs" ng-click="isCollapsed.room = !isCollapsed.room">
-            <span class="mdi mdi-chevron-down" ng-if="isCollapsed.room"></span>
-            <span class="mdi mdi-chevron-up" ng-if="!isCollapsed.room"></span>
+            <span class="glyphicon glyphicon-triangle-bottom" ng-if="isCollapsed.room"></span>
+            <span class="glyphicon glyphicon-triangle-top" ng-if="!isCollapsed.room"></span>
         </button>    
     </div>
     <div ng-if="!isCollapsed.room || !showLabel">

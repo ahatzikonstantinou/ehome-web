@@ -2,13 +2,15 @@
     <div ng-if="showLabel">
         <label class="floor">{{f.name}}</label>
         <button type="button" class="btn btn-link btn-xs" ng-click="isCollapsed.floor = !isCollapsed.floor">
-            <span class="mdi mdi-chevron-down" ng-if="isCollapsed.floor"></span>
-            <span class="mdi mdi-chevron-up" ng-if="!isCollapsed.floor"></span>
+            <span class="glyphicon glyphicon-triangle-bottom" ng-if="isCollapsed.floor"></span>
+            <span class="glyphicon glyphicon-triangle-top" ng-if="!isCollapsed.floor"></span>
         </button>    
     </div>
     <div ng-if="!isCollapsed.floor || !showLabel">
         <div ng-repeat="r in f.rooms">
-            <room room='r' show-label="f.rooms.length > 1" is-collapsed="isCollapsed.room[$index]" filter="filter"/>             
+            <div class="well">
+            <room room='r' show-label="f.rooms.length > 1" is-collapsed="isCollapsed.room[$index]" filter="filter"/>
+            </div>
         </div>
     </div>
 </div>

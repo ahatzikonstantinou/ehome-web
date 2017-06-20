@@ -57,6 +57,11 @@
       "main": [
         "dist/css/bootstrap.css"
       ]
+    },
+    "angularjs-slider": {
+      "dependecies": {
+        "angular": "1.5.8"
+      }
     }
   },
   "resolutions": {
