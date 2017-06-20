@@ -17,7 +17,8 @@
             'infinite-scroll',
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
-            'ui.toggle'
+            'ui.toggle',
+            'rzModule'
         ])
         .run(run);
 
@@ -27,7 +28,4 @@
         stateHandler.initialize();
         translationHandler.initialize();
     }
-
-    angular
-        .module('eHomeApp').value('items', []);
 })();

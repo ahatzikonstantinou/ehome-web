@@ -1,6 +1,7 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-blinds"/>{{i.name}}
     <div class="state-container">
-        <span class="state" ng-class="{ 'warning': i.state == 'OPEN', 'info': i.state == 'CLOSED' }">{{i.state.main}}</span>
+        <span class="state" ng-class="{ 'warning': i.state.main == 'OPEN', 'info': i.state.main == 'CLOSED' }">{{i.state.main}}</span>
+        <rzslider style="float:left;" data-rz-slider-model="i.state.percent"></rzslider>
     </div>
 </div>
