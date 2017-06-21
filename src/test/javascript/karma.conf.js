@@ -28,6 +28,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/json3/lib/json3.js',
             'src/main/webapp/bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js',
             'src/main/webapp/bower_components/angularjs-slider/dist/rzslider.js',
+            'src/main/webapp/bower_components/paho-mqtt-js/mqttws31.js',
             'src/main/webapp/bower_components/angular/angular.js',
             'src/main/webapp/bower_components/angular-aria/angular-aria.js',
             'src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
@@ -47,6 +48,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/ng-file-upload/ng-file-upload.js',
             'src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
             'src/main/webapp/bower_components/angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min.js',
+            'src/main/webapp/bower_components/angular-paho/dist/angular-paho.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

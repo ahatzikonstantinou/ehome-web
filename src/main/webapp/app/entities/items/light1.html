@@ -1,0 +1,9 @@
+<div style="overflow: auto;">
+    <span class="mdi mdi-lightbulb">{{i.name}}</span>
+        <div class="state-container">
+            <!--<button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.device.state.main == 'ON', 'btn-info': i.device.state.main == 'OFF' }" ng-click="i.device.state.main == 'ON' ? i.device.state.main = 'OFF' : i.device.state.main = 'ON'">-->
+            <button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.device.state.main == 'ON', 'btn-info': i.device.state.main == 'OFF' }" ng-click="i.device.state.main == 'ON' ? i.device.switch( 'OFF' ) : i.device.switch( 'ON' )">
+                {{i.device.state.main}}
+            </button>
+        </div>
+</div>

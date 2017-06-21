@@ -39,8 +39,9 @@
         </button>        
     </div>
     <div uib-collapse="isCollapsed.house">
-        <div ng-repeat="f in h.floors">
-            <floor floor='f' show-label="h.floors.length > 1" is-collapsed="isCollapsed.floor[$index]" filter="isCollapsed.filter"/>
+        <div ng-repeat="f in h.floors" ng-init="floorIndex=$index; showLabel=(h.floors.length > 1)">
+            <floor floor='f' show-label="h.floors.length > 1" is-collapsed="isCollapsed.floor[$index]" filter="isCollapsed.filter"/>            
+            </div>
         </div>
         <div ng-repeat="i in h.items">
             <item item='i' filter="isCollapsed.filter"/>

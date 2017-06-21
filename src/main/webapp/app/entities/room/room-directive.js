@@ -14,7 +14,13 @@
                     isCollapsed: '=',
                     filter: '='
                 },
-                templateUrl: '/app/entities/room/room.html'
+                templateUrl: '/app/entities/room/room.html',
+                link: function( scope, element, attrs )
+                {
+                    scope.$watch( 'r', function(){
+                        console.log( scope.r );
+                    } )
+                }
             };
         }
         );

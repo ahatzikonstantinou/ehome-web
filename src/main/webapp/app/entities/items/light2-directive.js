@@ -3,7 +3,7 @@
 
     angular
         .module('eHomeApp')
-        .directive( 'light', function()
+        .directive( 'light2', function()
         {
             return {
                 
@@ -11,7 +11,7 @@
                 scope: { 
                     i: '=item'
                 },
-                templateUrl: '/app/entities/items/light.html'
+                templateUrl: '/app/entities/items/light2.html'
             };
         }
         );

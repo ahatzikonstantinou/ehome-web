@@ -5,12 +5,22 @@
         .module('eHomeApp')
         .directive( 'door1', function()
         {
-            return {                
+            return {             
+                // transclude: true,   
                 restrict: 'E',
                 scope: { 
                     i: '=item'
                 },
-                templateUrl: '/app/entities/items/door1.html'
+                templateUrl: '/app/entities/items/door1.html',
+                // link: function( scope, element, attrs )
+                // {
+                //     scope.$watch( 'i', function(){
+                //         console.log( scope.i );
+                //     } )
+                //     scope.$watch( 'i.device', function(){
+                //         console.log( scope.i.device );
+                //     } )
+                // }
             };
         }
         );

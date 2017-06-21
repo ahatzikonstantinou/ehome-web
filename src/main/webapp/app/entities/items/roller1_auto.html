@@ -1,10 +1,10 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-blinds">{{i.name}}</span>
     <div class="state-container" style="display: table-cell;vertical-align: middle;">
-        <span class="state info">{{i.state.percent}}</span>
+        <span class="state info">{{i.device.state.percent}}</span>
         <div style="float:left; width:200px;">
-            <rzslider rz-slider-model="i.state.percent" rz-slider-options="{ floor: 0, ceil: 100, step: 1 }"></rzslider>
+            <rzslider rz-slider-model="i.device.state.percent" rz-slider-options="{ floor: 0, ceil: 100, step: 1 }"></rzslider>
         </div>
-        <span class="state" ng-class="{ 'warning': i.state.main == 'OPEN', 'info': i.state.main == 'CLOSED' }">{{i.state.main}}</span>        
+        <span class="state" ng-class="{ 'warning': i.device.state.main == 'OPEN', 'info': i.device.state.main == 'CLOSED' }">{{i.device.state.main}}</span>        
     </div>
 </div>

@@ -63,6 +63,11 @@
       "dependecies": {
         "angular": "1.5.8"
       }
+    },
+    "angular-paho": {
+      "dependencies": {
+          "paho-mqtt-js": "^1.0.1"
+      }
     }
   },
   "resolutions": {

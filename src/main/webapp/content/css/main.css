@@ -22,7 +22,7 @@
 .state-container
 {
     float:right;
-    margin:4px 0px 4px 0px;
+    margin:4px 0px 8px 0px;
     cursor: default;
 }
 
@@ -73,16 +73,20 @@
     margin-bottom: 4px;
 }
 
-item div
+/*item div
 {
     margin-bottom: 10px;
-}
+}*/
 
 .item > div
 {
+    margin-bottom: 5px;
     font-size: 13px;
     vertical-align: top;
     line-height: normal;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #ddd;
 }
 
 label.house

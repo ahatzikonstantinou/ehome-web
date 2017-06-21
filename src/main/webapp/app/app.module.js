@@ -18,7 +18,8 @@
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
             'ui.toggle',
-            'rzModule'
+            'rzModule',
+            'angularPaho'
         ])
         .run(run);
 
