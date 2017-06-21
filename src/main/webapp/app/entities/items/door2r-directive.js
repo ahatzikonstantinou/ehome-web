@@ -9,7 +9,8 @@
                 
                 restrict: 'E',
                 scope: { 
-                    i: '=item'
+                    i: '=item',
+                    showMqttTopics: '='
                 },
                 templateUrl: '/app/entities/items/door2r.html'
             };

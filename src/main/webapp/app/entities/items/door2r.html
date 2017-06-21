@@ -1,5 +1,6 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-glassdoor">{{i.name}}</span>
+        <span ng-if="showMqttTopics.show" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
         <div class="state-container">
             <span class="state" ng-class="{ 'warning': i.device.state.left == 'OPEN', 'info': i.device.state.left == 'CLOSED' }">{{i.device.state.left}}</span>
             <span class="state" ng-class="{ 'warning': i.device.state.right == 'OPEN', 'info': i.device.state.right == 'CLOSED' }">{{i.device.state.right}}</span>

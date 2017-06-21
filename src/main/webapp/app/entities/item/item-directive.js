@@ -10,7 +10,8 @@
                 restrict: 'E',
                 scope: { 
                     i: '=item',
-                    filter: '='
+                    filter: '=',
+                    showMqttTopics: '='
                 },
                 templateUrl: '/app/entities/item/item.html'
             };

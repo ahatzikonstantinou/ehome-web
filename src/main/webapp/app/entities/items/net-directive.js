@@ -8,7 +8,8 @@
             return {                
                 restrict: 'E',
                 scope: { 
-                    i: '=item'
+                    i: '=item',
+                    showMqttTopics: '='
                 },
                 templateUrl: '/app/entities/items/net.html'
             };

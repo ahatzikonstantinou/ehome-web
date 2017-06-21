@@ -1,3 +1,15 @@
+.device-off:after
+{
+    position:absolute;
+    right:-4px;
+
+    background: white;
+    height: 20px;
+    width: 10px;
+    display: block;
+    content: " ";
+}
+
 .rzslider
 {
     margin: 0px 0px 0px 0px;

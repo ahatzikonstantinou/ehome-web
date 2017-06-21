@@ -12,8 +12,6 @@
     function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2 ) {
         var vm = this;
 
-        vm.message = { text: "testing" };
-
         vm.account = null;
         vm.isAuthenticated = true; //null;
         // vm.login = LoginService.open;
@@ -34,6 +32,8 @@
         //     $state.go('register');
         // }
 
+        vm.showMqttTopics = { show: false };
+
         //ahat: NOTE: use strings for json messages when publishing topics from mqtt devices with tokens and string literals in double quotes like '{"main": "OPEN", "recline":"CLOSED"}'
         vm.houses = [
             { 
@@ -47,8 +47,8 @@
                                 items: [
                                     { name: 'Πόρτα εισόδου', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', device: new Door1( 'A/4/H/D', { main: 'OPEN' } ) },
                                     { name: 'Παράθυρο φωταγωγού', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window1R( 'A/4/H/W', { main: 'OPEN', recline: 'CLOSED' } ) },
-                                    { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', device: new Light1( 'A/4/H/LC/state', 'A/4/H/LC/set', { main: 'OFF' } ) },
-                                    { name: 'Εξωτερικό φως εισόδου', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', device: new Light1( 'A/4/H/LO/state', 'A/4/H/LO/set', { main: 'OFF' } ) },                                    
+                                    { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/H/LC/state', 'A/4/H/LC/set', { main: 'OFF' } ) },
+                                    { name: 'Εξωτερικό φως εισόδου', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/H/LO/state', 'A/4/H/LO/set', { main: 'OFF' } ) },                                    
                                     { name: 'Κάμερα', domain: 'CAMERA', type: 'CAMERA', protocol: 'http' },
                                     { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/H/TH', { temperature: 25, humidity: 10 } ) }
                                 ]
@@ -92,7 +92,7 @@
                                 items: [
                                     { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window1R( 'A/4/B/W', { main: 'OPEN', recline: 'CLOSED' } ) },
                                     { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/B/NW', { main: 'CLOSED' } ) },
-                                    { name: 'Φως', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', device: new Light1( 'A/4/B/L/state', 'A/4/B/L/set', { main: 'OFF' } ) },
+                                    { name: 'Φως', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/B/L/state', 'A/4/B/L/set', { main: 'OFF' } ) },
                                     { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/B/TH', { temperature: 32, humidity: 80 } ) }
                                 ]
                             }, 

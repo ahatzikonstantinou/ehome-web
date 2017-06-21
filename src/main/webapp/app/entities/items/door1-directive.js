@@ -9,7 +9,8 @@
                 // transclude: true,   
                 restrict: 'E',
                 scope: { 
-                    i: '=item'
+                    i: '=item',
+                    showMqttTopics: '='
                 },
                 templateUrl: '/app/entities/items/door1.html',
                 // link: function( scope, element, attrs )

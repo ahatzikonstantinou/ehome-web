@@ -37,10 +37,14 @@
         <button type="button" class="btn btn-xs btn-link" ng-click="isCollapsed.filter.DOOR = isCollapsed.filter.WINDOW = isCollapsed.filter.LIGHT = isCollapsed.filter.CLIMATE = isCollapsed.filter.COVER = isCollapsed.filter.ALARM = isCollapsed.filter.CAMERA = false">
             None
         </button>        
+        <button type="button" class="btn btn-md" ng-class="{ 'btn-default': !showMqttTopics.show, 'btn-primary': showMqttTopics.show }" ng-click="showMqttTopics.show = !showMqttTopics.show">
+            <span class="glyphicon" ng-class="{ 'glyphicon-eye-open': showMqttTopics.show, 'glyphicon-eye-close': !showMqttTopics.show}"/>
+            <!--<span class="glyphicon glyphicon-eye-open"/>-->
+        </button>
     </div>
     <div uib-collapse="isCollapsed.house">
         <div ng-repeat="f in h.floors" ng-init="floorIndex=$index; showLabel=(h.floors.length > 1)">
-            <floor floor='f' show-label="h.floors.length > 1" is-collapsed="isCollapsed.floor[$index]" filter="isCollapsed.filter"/>            
+            <floor floor='f' show-label="h.floors.length > 1" is-collapsed="isCollapsed.floor[$index]" filter="isCollapsed.filter" show-mqtt-topics="showMqttTopics"/>            
             </div>
         </div>
         <div ng-repeat="i in h.items">

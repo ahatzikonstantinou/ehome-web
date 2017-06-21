@@ -12,7 +12,8 @@
                     f: '=floor',
                     showLabel: '=',
                     isCollapsed: '=',
-                    filter: '='
+                    filter: '=',
+                    showMqttTopics: '='
                 },
                 templateUrl: '/app/entities/floor/floor.html'
             };

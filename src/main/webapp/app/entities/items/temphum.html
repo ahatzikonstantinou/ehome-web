@@ -1,5 +1,6 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-thermometer"/>{{i.name}}
+    <span ng-if="showMqttTopics.show" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
     <div class="state-container">
         <span class="state temperature mdi mdi-thermometer-lines">{{i.device.state.temperature}}°C</span>
         <span class="state humidity mdi mdi-water">{{i.device.state.humidity}}%</span>

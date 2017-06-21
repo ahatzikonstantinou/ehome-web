@@ -12,15 +12,10 @@
                     r: '=room',
                     showLabel: '=',
                     isCollapsed: '=',
-                    filter: '='
+                    filter: '=',
+                    showMqttTopics: '='
                 },
-                templateUrl: '/app/entities/room/room.html',
-                link: function( scope, element, attrs )
-                {
-                    scope.$watch( 'r', function(){
-                        console.log( scope.r );
-                    } )
-                }
+                templateUrl: '/app/entities/room/room.html'
             };
         }
         );
