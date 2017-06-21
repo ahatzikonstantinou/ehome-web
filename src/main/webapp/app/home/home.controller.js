@@ -32,8 +32,6 @@
         //     $state.go('register');
         // }
 
-        vm.showMqttTopics = { show: false };
-
         //ahat: NOTE: use strings for json messages when publishing topics from mqtt devices with tokens and string literals in double quotes like '{"main": "OPEN", "recline":"CLOSED"}'
         vm.houses = [
             { 
@@ -78,8 +76,9 @@
                                 items: [
                                     { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', device: new Door1( 'A/4/K/D', { main: 'OPEN' } ) },
                                     { name: 'Παράθυρο νεροχύτη', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window1R( 'A/4/K/WS', { main: 'OPEN', recline: 'CLOSED' } ) },
+                                    { name: 'Σίτα παραθύρου νεροχύτη', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/K/NWS', { main: 'CLOSED' } ) },
                                     { name: 'Παράθυρο φωταγωγού', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window2R( 'A/4/Κ/WL', { left: 'CLOSED', right: 'CLOSED', recline: 'OPEN' } ) },
-                                    { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/L/NB', { main: 'CLOSED' } ) },
+                                    { name: 'Σίτα παραθύρου φωταγωγού', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/K/NWL', { main: 'CLOSED' } ) },
                                     { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/K/LB/state', 'A/4/K/LB/set', { main: 'OFF' } ) },
                                     { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/K/LC/state', 'A/4/K/LC/set', { main: 'OFF' } ) },
                                     { name: 'Φως φαγητού', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/K/LD/state', 'A/4/K/LD/set', { main: 'OFF' } ) },
@@ -281,8 +280,9 @@
             vm.isCollapsed[i] = { 
                 house: true,
                 filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true },
-                allChildrenExpanded: false, 
-                floor: [] 
+                allChildrenExpanded: false,
+                showMqttTopics: false,
+                floor: []
             };
             for( var f  = 0 ; f < vm.houses[i].floors.length ; f++ )
             {
@@ -333,10 +333,7 @@
 
         client._client.onMessageArrived = function( message )
         {
-            $scope.$apply( function() { vm.message.text = message.destinationName + ' -> "' + message.payloadString +'"'; } );
-            
             console.log( 'Received [topic] "message": [', message.destinationName.trim(), '] "', message.payloadString, '"' );
-            console.log( 'vm.message :', vm.message );
             for( var i = 0 ; i < client.observerDevices.length ; i++ )
             {
                 $scope.$apply( function() { client.observerDevices[i].update( message.destinationName, message.payloadString ); } );
@@ -395,7 +392,7 @@
                     }
                     else
                     {
-                        console.log( 'Subscribing ', item.device );
+                        // console.log( 'Subscribing ', item.device );
                         client.observerDevices.push( item.device );
                         client.subscribe( item.device.mqtt_subscribe_topic );
                     }

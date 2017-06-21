@@ -21,7 +21,7 @@
             if( topic == this.mqtt_subscribe_topic )
             {
                 console.log( 'Door1[mqtt_subscribe_topic]: this message is for me.' );
-                this.state = message;
+                this.state = angular.fromJson( message );
             }
         }
 

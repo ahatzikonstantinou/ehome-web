@@ -11,8 +11,7 @@
                 scope: { 
                     h: '=house',
                     isCollapsed: '=',
-                    expandAllChildren: '&expandAllChildren',
-                    showMqttTopics: '='
+                    expandAllChildren: '&expandAllChildren'
                 },
                 templateUrl: '/app/entities/house/house.html'
             };

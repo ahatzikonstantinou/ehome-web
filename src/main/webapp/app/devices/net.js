@@ -20,7 +20,7 @@
         {
             if( topic == this.mqtt_subscribe_topic )
             {
-                this.state = message;
+                this.state = angular.fromJson( message );
             }
         }
 

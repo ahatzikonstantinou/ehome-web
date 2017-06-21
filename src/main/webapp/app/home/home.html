@@ -15,7 +15,7 @@
     </div>-->
     <div ng-repeat="h in vm.houses" ng-init="houseIndex = $index; isCollapsed=vm.isCollapsed[$index]">
         <div class="well">
-            <house house="h" is-collapsed="vm.isCollapsed[houseIndex]" expand-all-children="vm.expandAllChildren( house, expand )" show-mqtt-topics="vm.showMqttTopics"/>
+            <house house="h" is-collapsed="vm.isCollapsed[houseIndex]" expand-all-children="vm.expandAllChildren( house, expand )"/>
             
 
 

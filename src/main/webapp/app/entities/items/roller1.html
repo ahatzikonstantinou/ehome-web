@@ -1,6 +1,6 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-blinds"/>{{i.name}}
-    <span ng-if="showMqttTopics.show" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
+    <span ng-if="showMqttTopics" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
 
     <div class="state-container">
         <span class="state" ng-class="{ 'warning': i.device.state.main == 'OPEN', 'info': i.device.state.main == 'CLOSED' }">{{i.device.state.main}}</span>

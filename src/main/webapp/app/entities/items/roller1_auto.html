@@ -1,11 +1,11 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-blinds">{{i.name}}</span>
-    <span ng-if="showMqttTopics.show" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
-    <span ng-if="showMqttTopics.show" class="text-danger">{{i.device.mqtt_publish_topic}}</span>
+    <span ng-if="showMqttTopics" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
+    <span ng-if="showMqttTopics" class="text-danger">{{i.device.mqtt_publish_topic}}</span>
     <div class="state-container" style="display: table-cell;vertical-align: middle;">
-        <span class="state info">{{i.device.state.percent}}</span>
+        <span class="state info">{{i.device.tempPercent}}</span>
         <div style="float:left; width:200px;">
-            <rzslider rz-slider-model="i.device.state.percent" rz-slider-options="{ floor: 0, ceil: 100, step: 1 }"></rzslider>
+            <rzslider rz-slider-model="i.device.tempPercent" rz-slider-options="{ floor: 0, ceil: 100, step: 1, onEnd: i.device.setPercent() }" ></rzslider>
         </div>
         <span class="state" ng-class="{ 'warning': i.device.state.main == 'OPEN', 'info': i.device.state.main == 'CLOSED' }">{{i.device.state.main}}</span>        
     </div>

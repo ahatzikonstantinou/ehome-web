@@ -16,6 +16,7 @@
             this.mqtt_publish_topic = mqtt_publish_topic;
             this.state = state;
             this.publisher = null;
+            this.tempPercent = state.percent;
         }
 
         Roller1_Auto.prototype.update = function( topic, message )
@@ -23,6 +24,10 @@
             if( topic == this.mqtt_subscribe_topic )
             {
                 this.state = angular.fromJson( message );
+                if( this.state.percent != this.tempPercent )
+                {
+                    this.tempPercent = this.state.percent;
+                }
             }
         }
 
@@ -31,12 +36,21 @@
             this.publisher = publisher;
         }
 
-        Roller1_Auto.prototype.switch = function( value )
+        Roller1_Auto.prototype.setPercent = function()
         {
-            console.log( 'Roller1_Auto will send value ', value, ' to topic ', this.mqtt_publish_topic );
+            // the rzSlider control will call Roller1_Auto.prototype.setPercent (its own onEnd handler) even when first rendering the control.
+            // tempPercent is used to avoid having the rzSlider cause unnecessary publications for every rendering
+            // console.log( this );
+            console.log( 'Roller1_Auto this.state.percent: ', this.state.percent, ' this.tempPercent: ', this.tempPercent );
+            if( this.tempPercent == this.state.percent )
+            {
+                console.log( 'Percent is still ', this.state.percent, ' will not publish change.' );                
+                return;
+            }
+            this.state.percent = this.tempPercent;
             if( this.publisher )
             {
-                var message = new Paho.MQTT.Message( value );
+                var message = new Paho.MQTT.Message( this.state.percent + '' );
                 message.destinationName = this.mqtt_publish_topic ;
                 console.log( 'Roller1_Auto sending message: ', message );
                 this.publisher.send( message );
