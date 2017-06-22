@@ -1,15 +1,12 @@
 <div style="overflow: auto;">
     <span class="mdi mdi-lightbulb">{{i.name}}</span>
-    <span ng-if="showMqttTopics" class="text-primary">{{i.device.mqtt_subscribe_topic}}</span>
-    <span ng-if="showMqttTopics" class="text-danger">{{i.device.mqtt_publish_topic}}</span>
-
-        <div class="state-container">
-            <!--<button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.device.state.main == 'ON', 'btn-info': i.device.state.main == 'OFF' }" ng-click="i.device.state.main == 'ON' ? i.device.state.main = 'OFF' : i.device.state.main = 'ON'">-->
-            <button type="button" class="btn btn-xs" ng-class="{ 'btn-warning device-on': i.device.state.left == 'ON', 'btn-info device-off': i.device.state.left == 'OFF' }" ng-click="i.device.state.left == 'ON' ? i.device.switchLeft( 'OFF' ) : i.device.switchLeft( 'ON' )">
-                {{i.device.state.left}}
-            </button>
-            <button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.device.state.right == 'ON', 'btn-info': i.device.state.right == 'OFF' }" ng-click="i.device.state.right == 'ON' ? i.device.switchRight( 'OFF' ) : i.device.switchRight( 'ON' )">
-                {{i.device.state.right}}
-            </button>
-        </div>
+    <div class="state-container">
+        <!--<button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.device.state.main == 'ON', 'btn-info': i.device.state.main == 'OFF' }" ng-click="i.device.state.main == 'ON' ? i.device.state.main = 'OFF' : i.device.state.main = 'ON'">-->
+        <button type="button" class="btn btn-xs" ng-class="{ 'btn-warning device-on': i.device.state.left == 'ON', 'btn-info device-off': i.device.state.left == 'OFF' }" ng-click="i.device.state.left == 'ON' ? i.device.switchLeft( 'OFF' ) : i.device.switchLeft( 'ON' )">
+            {{i.device.state.left}}
+        </button>
+        <button type="button" class="btn btn-xs" ng-class="{ 'btn-warning': i.device.state.right == 'ON', 'btn-info': i.device.state.right == 'OFF' }" ng-click="i.device.state.right == 'ON' ? i.device.switchRight( 'OFF' ) : i.device.switchRight( 'ON' )">
+            {{i.device.state.right}}
+        </button>
+    </div>
 </div>

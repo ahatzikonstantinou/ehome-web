@@ -38,6 +38,13 @@
     cursor: default;
 }
 
+.unarmed { background-color: #5bc0de; color: #fff; }
+.arming { background-color: #337ab7; color: #fff; }
+.armed-home { background-color: #5cb85c; color: #fff; }
+.armed-away { background-color: #5cb85c; color: #fff; }
+.triggered { background-color: #f0ad4e; color: #911 !important; }
+.activated { background-color: #d9534f; color: yellow !important; }
+
 .state
 {
     padding: 3px 5px 3px 5px;
@@ -46,16 +53,34 @@
     color: white;
 }
 
+.state.primary
+{
+    background-color: #337ab7;
+    color: #fff;
+}
+
+.state.success
+{
+    background-color: #5cb85c;
+    color: #fff;
+}
+
 .state.info
 {
     background-color: #5bc0de;
-    color: #fff
+    color: #fff;
 }
 
 .state.warning
 {
     background-color: #f0ad4e;
-    color: #fff
+    color: #fff;
+}
+
+.state.danger
+{
+    background-color: #d9534f;
+    color: #fff;
 }
 
 .temperature
