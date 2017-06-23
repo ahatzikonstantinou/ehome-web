@@ -11,7 +11,10 @@
                 scope: { 
                     i: '=item',
                     filter: '=',
-                    showMqttTopics: '='
+                    showMqttTopics: '=',
+                    isCollapsedHouse: '=',
+                    isCollapsedFloor: '=',
+                    isCollapsedRoom: '='
                 },
                 templateUrl: '/app/entities/item/item.html'
             };

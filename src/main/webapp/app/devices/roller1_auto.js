@@ -41,10 +41,10 @@
             // the rzSlider control will call Roller1_Auto.prototype.setPercent (its own onEnd handler) even when first rendering the control.
             // tempPercent is used to avoid having the rzSlider cause unnecessary publications for every rendering
             // console.log( this );
-            console.log( 'Roller1_Auto this.state.percent: ', this.state.percent, ' this.tempPercent: ', this.tempPercent );
+            // console.log( 'Roller1_Auto this.state.percent: ', this.state.percent, ' this.tempPercent: ', this.tempPercent );
             if( this.tempPercent == this.state.percent )
             {
-                console.log( 'Percent is still ', this.state.percent, ' will not publish change.' );                
+                // console.log( 'Percent is still ', this.state.percent, ' will not publish change.' );                
                 return;
             }
             this.state.percent = this.tempPercent;
@@ -52,7 +52,7 @@
             {
                 var message = new Paho.MQTT.Message( this.state.percent + '' );
                 message.destinationName = this.mqtt_publish_topic ;
-                console.log( 'Roller1_Auto sending message: ', message );
+                // console.log( 'Roller1_Auto sending message: ', message );
                 this.publisher.send( message );
             }
         }

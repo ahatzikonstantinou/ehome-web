@@ -12,6 +12,7 @@
                     f: '=floor',
                     showLabel: '=',
                     isCollapsed: '=',
+                    isCollapsedHouse: '=',
                     filter: '=',
                     showMqttTopics: '='
                 },

@@ -12,6 +12,8 @@
                     r: '=room',
                     showLabel: '=',
                     isCollapsed: '=',
+                    isCollapsedHouse: '=',
+                    isCollapsedFloor: '=',
                     filter: '=',
                     showMqttTopics: '='
                 },
