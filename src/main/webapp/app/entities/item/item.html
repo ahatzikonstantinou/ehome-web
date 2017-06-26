@@ -10,6 +10,7 @@
 
     <!-- ahat note: the ipcamera needs to know whether the house or floor or room it belongs to is collapsed in order to change the img src to '#' and stop downloading the camera stream-->
     <ipcamera class="item" item='i' ng-if="i.type == 'IPCAMERA' && filter.CAMERA" show-mqtt-topics="showMqttTopics" is-collapsed-house="isCollapsedHouse" is-collapsed-floor="isCollapsedFloor" is-collapsed-room="isCollapsedRoom" />
+    <ipcamera-pan-tilt class="item" item='i' ng-if="i.type == 'IPCAMERAPANTILT' && filter.CAMERA" show-mqtt-topics="showMqttTopics" is-collapsed-house="isCollapsedHouse" is-collapsed-floor="isCollapsedFloor" is-collapsed-room="isCollapsedRoom" />
     
     <temphum class="item" item='i' ng-if="i.type == 'TEMPERATURE_HUMIDITY' && filter.CLIMATE" show-mqtt-topics="showMqttTopics"/>
     <net class="item" item='i' ng-if="i.type == 'NET' && filter.COVER" show-mqtt-topics="showMqttTopics"/>

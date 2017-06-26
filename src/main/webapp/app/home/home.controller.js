@@ -6,10 +6,10 @@
         .controller('HomeController', HomeController);
 
     // HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
-    HomeController.$inject = ['$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera' ];
+    HomeController.$inject = ['$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt' ];
 
     // function HomeController ($scope, Principal, LoginService, $state) {
-    function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera ) {
+    function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt ) {
         var vm = this;
 
         vm.account = null;
@@ -48,7 +48,7 @@
                                     { name: 'Σίτα φωταγωγού', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/H/COVER/W', { main: 'CLOSED' } ) },
                                     { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/H/LIGHT/LC/state', 'A/4/H/LC/set', { main: 'OFF' } ) },
                                     { name: 'Εξωτερικό φως εισόδου', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/H/LIGHT/LO/state', 'A/4/H/LO/set', { main: 'OFF' } ) },                                    
-                                    { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http', device: new IPCamera( 'http://192.168.1.79/webcam' )  },
+                                    { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERAPANTILT', protocol: 'http', device: new IPCameraPanTilt( 'http://192.168.1.79/webcam/', 'videostream.cgi?', 'decoder_control.cgi?command=4', 'decoder_control.cgi?command=6', 'decoder_control.cgi?command=0', 'decoder_control.cgi?command=2', 'decoder_control.cgi?command=1' )  },
                                     { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/H/TH', { temperature: 25, humidity: 10 } ) }
                                 ]
                             }, 
