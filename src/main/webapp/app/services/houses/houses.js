@@ -1,40 +1,16 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('eHomeApp')
-        .controller('HomeController', HomeController);
+        .factory('Houses', Houses);
 
-    // HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
-    HomeController.$inject = ['$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses' ];
+    Houses.$inject = [ 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt' ];
 
-    // function HomeController ($scope, Principal, LoginService, $state) {
-    function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses ) {
-        var vm = this;
-
-        vm.account = null;
-        vm.isAuthenticated = true; //null;
-        // vm.login = LoginService.open;
-        // vm.register = register;
-        // $scope.$on('authenticationSuccess', function() {
-        //     getAccount();
-        // });
-
-        // getAccount();
-
-        // function getAccount() {
-        //     Principal.identity().then(function(account) {
-        //         vm.account = account;
-        //         vm.isAuthenticated = Principal.isAuthenticated;
-        //     });
-        // }
-        // function register () {
-        //     $state.go('register');
-        // }
-
-        vm.houses = Houses.data;
-/*        //ahat: NOTE: use strings for json messages when publishing topics from mqtt devices with tokens and string literals in double quotes like '{"main": "OPEN", "recline":"CLOSED"}'
-        vm.houses = [
+    function Houses( Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt ) 
+    {
+        var service = {
+            data: [
             { 
                 name: 'Διαμέρισμα Αντώνη', 
                 floors: [ 
@@ -273,156 +249,8 @@
             //     ],
             //     items: [ { name: 'Συναγερμός', domain: 'ALARM', type: 'ALARM', protocol: 'mqtt' } ]
             // }
-        ];
-*/
-        // console.log( vm.houses );
-        vm.isCollapsed = [];        
-        for( var i = 0 ; i < vm.houses.length ; i++ )
-        {            
-            vm.isCollapsed[i] = { 
-                house: true,
-                filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true },
-                allChildrenExpanded: false,
-                showMqttTopics: false,
-                floor: []
-            };
-            for( var f  = 0 ; f < vm.houses[i].floors.length ; f++ )
-            {
-                vm.isCollapsed[i].floor[f] = { floor: true, room: [] };
-                // console.log( 'House[',i,'].floors[',f,']: ', vm.houses[i].floors[f] );
-                for( var r  = 0 ; r < vm.houses[i].floors[f].rooms.length ; r++ )
-                {
-                    vm.isCollapsed[i].floor[f].room[r] = { room: true };
-                }
-            }
-        }
-
-        vm.expandAllChildren = function( house, expand )
-        {
-            for( var houseIndex = 0 ; houseIndex < vm.houses.length ; houseIndex++ )
-            {
-                if( !angular.equals( vm.houses[houseIndex], house ) )
-                {
-                    continue;
-                }
-                            
-                vm.isCollapsed[ houseIndex ].house = expand;
-                vm.isCollapsed[ houseIndex ].allChildrenExpanded = !expand;
-                for( var f = 0 ; f < vm.houses[houseIndex].floors.length ; f++ )
-                {
-                    vm.isCollapsed[houseIndex].floor[f].floor = expand;
-                    for( var r  = 0 ; r < vm.houses[houseIndex].floors[f].rooms.length ; r++ )
-                    {
-                        vm.isCollapsed[houseIndex].floor[f].room[r].room = expand;
-                    }
-                }
-            }
-        }
-        
-        console.log( vm.isCollapsed );
-
-        //MQTT
-        var mqtt_broker_ip = '192.168.1.79';
-        var mqtt_broker_port = '1884';
-        var mqtt_client_id = 'eHomeWebGUI'
-        var client = MqttClient;
-        client.observerDevices = [];
-        client.init( mqtt_broker_ip, mqtt_broker_port, mqtt_client_id );
-        client.connect({
-            onSuccess: successCallback,
-            onFailure: function() { alert( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
-        });        
-
-        client._client.onMessageArrived = function( message )
-        {
-            console.log( 'Received [topic] "message": [', message.destinationName.trim(), '] "', message.payloadString, '"' );
-            for( var i = 0 ; i < client.observerDevices.length ; i++ )
-            {
-                $scope.$apply( function() { client.observerDevices[i].update( message.destinationName, message.payloadString ); } );
-            }
-        }
-
-        function successCallback()
-        {
-            console.log( 'Successfully connected to mqtt broker ', mqtt_broker_ip, mqtt_broker_port, ' subscribing to item topics...');
-            // subscribe to all topics
-            for( var h = 0 ; h < vm.houses.length ; h++ )
-            {
-                // console.log( 'Doing house "', vm.houses[h].name, '":' )
-                for( var f = 0 ; f < vm.houses[h].floors.length ; f++ )
-                {
-                    // console.log( '\tfloor "', vm.houses[h].floors[f].name, '":' )
-                    for( var r = 0 ; r < vm.houses[h].floors[f].rooms.length ; r++ )
-                    {
-                        // console.log( '\t\troom "', vm.houses[h].floors[f].rooms[r].name, '":' )
-                        for( var i = 0 ; i < vm.houses[h].floors[f].rooms[r].items.length ; i++ )
-                        {
-                            if( vm.houses[h].floors[f].rooms[r].items[i].protocol = 'mqtt' )
-                            {
-                                subscribe( vm.houses[h].floors[f].rooms[r].items[i] );
-                            }
-                        }
-                    }
-                }
-                if( vm.houses[h].items )
-                {
-                    for( var i = 0 ; i < vm.houses[h].items.length ; i++ )
-                    {
-                        if( vm.houses[h].items[i].protocol = 'mqtt' )
-                        {
-                            subscribe( vm.houses[h].items[i] );
-                        }
-                    }
-                }
-            }
-        }
-
-        function subscribe( item )
-        {
-            // console.log( '\t\titem:', item );
-            switch( item.type )
-            {
-                case 'ALARM':
-                case 'NET':
-                case 'DOOR1':
-                case 'DOOR2R':
-                case 'LIGHT1':
-                case 'LIGHT2':
-                case 'ROLLER1':
-                case 'ROLLER1_AUTO':
-                case 'TEMPERATURE_HUMIDITY':
-                case 'WINDOW1':
-                case 'WINDOW1R':
-                case 'WINDOW2R':
-                    if( !item.device )
-                    {
-                        // console.log( 'No device property found!' );
-                    }
-                    else
-                    {
-                        // console.log( 'Subscribing ', item.device );
-                        client.observerDevices.push( item.device );
-                        client.subscribe( item.device.mqtt_subscribe_topic );
-                    }
-                    break;
-                default: 
-                    // console.log( 'Unknown item type [', item.type, ']' );
-                    break;
-            }
-            switch( item.type )
-            {
-                case 'ALARM':
-                case 'LIGHT1':
-                case 'LIGHT2':
-                case 'ROLLER1_AUTO':
-                    if( item.device )
-                    {
-                        item.device.setPublisher( client );
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+        ]
+        };
+        return service;
     }
 })();

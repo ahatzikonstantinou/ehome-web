@@ -14,6 +14,14 @@
             "follow": "Ακολουθείστε @java_hipster στο Twitter"
         },
         "like": "Άμα σας αρέσει το JHipster, μην ξεχάσετε να μας δώσετε ένα αστέρι",
-        "github": "GitHub"
+        "github": "GitHub",
+        "alarm": {
+            "UNARMED": "Μη οπλισμένος",
+            "ARMING": "Οπλίζει",
+            "ARMED_HOME": "Οπλισμένος με ενοίκους",
+            "ARMED_AWAY": "Οπλισμένος χωρίς ενοίκους",
+            "TRIGGERED": "Ενεργοπιημένος",
+            "ACTIVATED": "Ενεργός"
+        }
     }
 }

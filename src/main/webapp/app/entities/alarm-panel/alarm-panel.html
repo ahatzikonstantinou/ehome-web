@@ -1,0 +1,35 @@
+<div ng-cloak>
+    <div class="row">
+        <h1 class="state">{{vm.alarm.state.main}}</h1>
+        <h2 class="challenge" ng-if="vm.alarm.state.challengePin.length > 0">{{vm.alarm.state.challengePin}}</h2>
+        <input type="text" class="pin" ng-model="vm.pin">        
+    </div>
+    <div class="container">
+        <div class="col-xs-8">
+            <div class="row">
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">7</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">8</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">9</button></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">4</button></div> 
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">5</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">6</button></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">1</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">2</button></div>
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">3</button></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4"><button type="button" class="btn btn-default btn-lg">0</button></div>
+                <div class="col-xs-8"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"/></button></div>
+            </div>            
+        </div>
+        <div class="col-xs-2">
+            <div class="row"><button type="button" class="btn btn-default btn-lg cmd-button"><span data-translate="">ARM HOME</span></button></div>
+            <div class="row"><button type="button" class="btn btn-default btn-lg cmd-button"><span data-translate="">ARM AWAY</span></button></div>
+            <div class="row"><button type="button" class="btn btn-default btn-lg cmd-button"><span data-translate="">DISARM</span></button></div>
+        </div>
+    </div>
+</div>
