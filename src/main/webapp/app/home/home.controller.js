@@ -342,6 +342,14 @@
             }
         }
 
+        client._client.onConnectionLost = function( error ) { 
+            console.log( 'Connection lost with error: ', error, ' attempting to reconnect.' );
+            client.connect( {
+                onSuccess: successCallback,
+                onFailure: function() { alert( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
+            } );
+        }
+
         function successCallback()
         {
             console.log( 'Successfully connected to mqtt broker ', mqtt_broker_ip, mqtt_broker_port, ' subscribing to item topics...');

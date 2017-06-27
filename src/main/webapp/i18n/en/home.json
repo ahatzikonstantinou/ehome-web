@@ -21,7 +21,10 @@
             "ARMED_HOME": "Armed Home",
             "ARMED_AWAY": "Armed Away",
             "TRIGGERED": "Triggered",
-            "ACTIVATED": "Activated"
+            "ACTIVATED": "Activated",
+            "ARM_HOME": "Arm Home",
+            "ARM_AWAY": "Arm Away",
+            "DISARM": "Disarm"
         }
     }
 }
