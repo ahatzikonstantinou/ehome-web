@@ -24,7 +24,8 @@
             "ACTIVATED": "Activated",
             "ARM_HOME": "Arm Home",
             "ARM_AWAY": "Arm Away",
-            "DISARM": "Disarm"
+            "DISARM": "Disarm",
+            "UNAVAILABLE": "Unavailable"
         }
     }
 }

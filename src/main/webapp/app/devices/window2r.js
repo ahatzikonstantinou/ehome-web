@@ -12,17 +12,11 @@
         function Window2R( mqtt_subscribe_topic, state )
         {
             //public properties
-            this.mqtt_subscribe_topic = mqtt_subscribe_topic;
-            this.state = state;
+            MqttDevice.call( this, mqtt_subscribe_topic, state );
         }
-
-        Window2R.prototype.update = function( topic, message )
-        {
-            if( topic == this.mqtt_subscribe_topic )
-            {
-                this.state = angular.fromJson( message );
-            }
-        }
+        
+        Window2R.prototype = Object.create( MqttDevice.prototype );
+        Window2R.prototype.constructor = Window2R;
 
         return Window2R;
     }

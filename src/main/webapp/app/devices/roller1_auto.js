@@ -12,12 +12,12 @@
         function Roller1_Auto( mqtt_subscribe_topic, mqtt_publish_topic, state )
         {
             //public properties
-            this.mqtt_subscribe_topic = mqtt_subscribe_topic;
-            this.mqtt_publish_topic = mqtt_publish_topic;
-            this.state = state;
-            this.publisher = null;
+            MqttDevice.call( this, mqtt_subscribe_topic, state, mqtt_publish_topic );
             this.tempPercent = state.percent;
         }
+
+        Roller1_Auto.prototype = Object.create( MqttDevice.prototype );
+        Roller1_Auto.prototype.constructor = Roller1_Auto;
 
         Roller1_Auto.prototype.update = function( topic, message )
         {
@@ -29,12 +29,7 @@
                     this.tempPercent = this.state.percent;
                 }
             }
-        }
-
-        Roller1_Auto.prototype.setPublisher = function( publisher )
-        {
-            this.publisher = publisher;
-        }
+        }       
 
         Roller1_Auto.prototype.setPercent = function()
         {

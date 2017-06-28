@@ -1,9 +1,9 @@
-<div>
-    <span ng-if="showMqttTopics" class="item">[{{i.type}}]</span>
-    <span ng-if="showMqttTopics" class="text-primary">{{i.device.url}}</span>
+<div ng-if="showMqttTopics">
+    <span class="item">[{{i.type}}]</span>
+    <span class="text-primary">{{i.device.url}}</span>
 </div>
 <div style="overflow: auto;">
-    <span class="mdi mdi-camcorder"/>{{i.name}}
+    <span class="mdi mdi-camcorder device-icon"/>{{i.name}}
     <button type="button" class="btn btn-md btn-default"  ng-init="show=false" ng-click="show=!show">
         <span class="glyphicon glyphicon-eye-open" ng-if="show"/>
         <span class="glyphicon glyphicon-eye-close" ng-if="!show"/>

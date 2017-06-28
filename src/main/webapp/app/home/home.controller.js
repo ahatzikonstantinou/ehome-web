@@ -338,6 +338,7 @@
             console.log( 'Received [topic] "message": [', message.destinationName.trim(), '] "', message.payloadString, '"' );
             for( var i = 0 ; i < client.observerDevices.length ; i++ )
             {
+                console.log( client.observerDevices[i] );
                 $scope.$apply( function() { client.observerDevices[i].update( message.destinationName, message.payloadString ); } );
             }
         }
@@ -408,7 +409,7 @@
                     }
                     else
                     {
-                        // console.log( 'Subscribing ', item.device );
+                        console.log( 'Subscribing ', item.device );
                         client.observerDevices.push( item.device );
                         client.subscribe( item.device.mqtt_subscribe_topic );
                     }

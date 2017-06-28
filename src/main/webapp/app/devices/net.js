@@ -12,17 +12,11 @@
         function Net( mqtt_subscribe_topic, state )
         {
             //public properties
-            this.mqtt_subscribe_topic = mqtt_subscribe_topic;
-            this.state = state;
+            MqttDevice.call( this, mqtt_subscribe_topic, state );
         }
-
-        Net.prototype.update = function( topic, message )
-        {
-            if( topic == this.mqtt_subscribe_topic )
-            {
-                this.state = angular.fromJson( message );
-            }
-        }
+        
+        Net.prototype = Object.create( MqttDevice.prototype );
+        Net.prototype.constructor = Net;
 
         return Net;
     }

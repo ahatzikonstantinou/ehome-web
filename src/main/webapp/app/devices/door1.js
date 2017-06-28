@@ -11,19 +11,11 @@
         //Constructor
         function Door1( mqtt_subscribe_topic, state )
         {
-            //public properties
-            this.mqtt_subscribe_topic = mqtt_subscribe_topic;
-            this.state = state;
+            MqttDevice.call( this, mqtt_subscribe_topic, state );
         }
-
-        Door1.prototype.update = function( topic, message )
-        {
-            if( topic == this.mqtt_subscribe_topic )
-            {
-                console.log( 'Door1[mqtt_subscribe_topic]: this message is for me.' );
-                this.state = angular.fromJson( message );
-            }
-        }
+        
+        Door1.prototype = Object.create( MqttDevice.prototype );
+        Door1.prototype.constructor = Door1;
 
         return Door1;
     }
