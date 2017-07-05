@@ -6,10 +6,10 @@
         .controller('HomeController', HomeController);
 
     // HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
-    HomeController.$inject = ['$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses' ];
+    HomeController.$inject = ['$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses', 'MotionCamera', 'MotionCameraPanTilt' ];
 
     // function HomeController ($scope, Principal, LoginService, $state) {
-    function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses ) {
+    function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses, MotionCamera, MotionCameraPanTilt ) {
         var vm = this;
 
         vm.account = null;
@@ -281,7 +281,7 @@
         {            
             vm.isCollapsed[i] = { 
                 house: true,
-                filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true },
+                filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true, MOTION: true },
                 allChildrenExpanded: false,
                 showMqttTopics: false,
                 floor: []
@@ -397,6 +397,8 @@
                 case 'DOOR2R':
                 case 'LIGHT1':
                 case 'LIGHT2':
+                case 'MOTIONCAMERA':
+                case 'MOTIONCAMERAPANTILT':
                 case 'ROLLER1':
                 case 'ROLLER1_AUTO':
                 case 'TEMPERATURE_HUMIDITY':
@@ -423,6 +425,8 @@
                 case 'ALARM':
                 case 'LIGHT1':
                 case 'LIGHT2':
+                case 'MOTIONCAMERA':
+                case 'MOTIONCAMERAPANTILT':
                 case 'ROLLER1_AUTO':
                     if( item.device )
                     {

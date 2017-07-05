@@ -8,9 +8,11 @@
     <light1 class="item" item='i' ng-if="i.type == 'LIGHT1' && filter.LIGHT" show-mqtt-topics="showMqttTopics"/>
     <light2 class="item" item='i' ng-if="i.type == 'LIGHT2' && filter.LIGHT" show-mqtt-topics="showMqttTopics"/>
 
-    <!-- ahat note: the ipcamera needs to know whether the house or floor or room it belongs to is collapsed in order to change the img src to '#' and stop downloading the camera stream-->
+    <!-- ahat note: the cameras need to know whether the house or floor or room they belong to is collapsed in order to change the img src to '#' and stop downloading the camera stream-->
     <ipcamera class="item" item='i' ng-if="i.type == 'IPCAMERA' && filter.CAMERA" show-mqtt-topics="showMqttTopics" is-collapsed-house="isCollapsedHouse" is-collapsed-floor="isCollapsedFloor" is-collapsed-room="isCollapsedRoom" />
     <ipcamera-pan-tilt class="item" item='i' ng-if="i.type == 'IPCAMERAPANTILT' && filter.CAMERA" show-mqtt-topics="showMqttTopics" is-collapsed-house="isCollapsedHouse" is-collapsed-floor="isCollapsedFloor" is-collapsed-room="isCollapsedRoom" />
+    <motion-camera class="item" item='i' ng-if="i.type == 'MOTIONCAMERA' && filter.MOTION" show-mqtt-topics="showMqttTopics" is-collapsed-house="isCollapsedHouse" is-collapsed-floor="isCollapsedFloor" is-collapsed-room="isCollapsedRoom" />
+    <motion-camera-pan-tilt class="item" item='i' ng-if="i.type == 'MOTIONCAMERAPANTILT' && filter.MOTION" show-mqtt-topics="showMqttTopics" is-collapsed-house="isCollapsedHouse" is-collapsed-floor="isCollapsedFloor" is-collapsed-room="isCollapsedRoom" />
     
     <temphum class="item" item='i' ng-if="i.type == 'TEMPERATURE_HUMIDITY' && filter.CLIMATE" show-mqtt-topics="showMqttTopics"/>
     <net class="item" item='i' ng-if="i.type == 'NET' && filter.COVER" show-mqtt-topics="showMqttTopics"/>

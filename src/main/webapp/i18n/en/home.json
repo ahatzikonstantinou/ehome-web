@@ -26,6 +26,15 @@
             "ARM_AWAY": "Arm Away",
             "DISARM": "Disarm",
             "UNAVAILABLE": "Unavailable"
+        },
+        "motion": {
+            "NO_MOTION": "No motion",
+            "MOTION_DETECTED": "Motion detected",
+            "CAMERA_LOST": "Camera lost",
+            "playing": { 
+                "true": "Active",
+                "false": "Inactive"
+            }
         }
     }
 }

@@ -31,10 +31,13 @@
         <button type="button" class="btn btn-xs" ng-class="{ 'btn-default': !isCollapsed.filter.CAMERA, 'btn-primary': isCollapsed.filter.CAMERA }" ng-click="isCollapsed.filter.CAMERA = !isCollapsed.filter.CAMERA">
             <span class="mdi mdi-camcorder"/>
         </button>        
-        <button type="button" class="btn btn-xs btn-link" ng-click="isCollapsed.filter.DOOR = isCollapsed.filter.WINDOW = isCollapsed.filter.LIGHT = isCollapsed.filter.CLIMATE = isCollapsed.filter.COVER = isCollapsed.filter.ALARM = isCollapsed.filter.CAMERA = true">
+        <button type="button" class="btn btn-xs" ng-class="{ 'btn-default': !isCollapsed.filter.MOTION, 'btn-primary': isCollapsed.filter.MOTION }" ng-click="isCollapsed.filter.MOTION = !isCollapsed.filter.MOTION">
+            <span class="mdi mdi-vibrate mdi-camera"/>
+        </button>        
+        <button type="button" class="btn btn-xs btn-link" ng-click="isCollapsed.filter.DOOR = isCollapsed.filter.WINDOW = isCollapsed.filter.LIGHT = isCollapsed.filter.CLIMATE = isCollapsed.filter.COVER = isCollapsed.filter.ALARM = isCollapsed.filter.CAMERA = isCollapsed.filter.MOTION = true">
             All
         </button>        
-        <button type="button" class="btn btn-xs btn-link" ng-click="isCollapsed.filter.DOOR = isCollapsed.filter.WINDOW = isCollapsed.filter.LIGHT = isCollapsed.filter.CLIMATE = isCollapsed.filter.COVER = isCollapsed.filter.ALARM = isCollapsed.filter.CAMERA = false">
+        <button type="button" class="btn btn-xs btn-link" ng-click="isCollapsed.filter.DOOR = isCollapsed.filter.WINDOW = isCollapsed.filter.LIGHT = isCollapsed.filter.CLIMATE = isCollapsed.filter.COVER = isCollapsed.filter.ALARM = isCollapsed.filter.CAMERA = isCollapsed.filter.MOTION = false">
             None
         </button>        
         <button type="button" class="btn btn-md" ng-class="{ 'btn-default': !isCollapsed.showMqttTopics, 'btn-primary': isCollapsed.showMqttTopics }" ng-click="isCollapsed.showMqttTopics = !isCollapsed.showMqttTopics">
