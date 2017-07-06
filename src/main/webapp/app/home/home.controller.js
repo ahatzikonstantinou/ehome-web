@@ -6,10 +6,10 @@
         .controller('HomeController', HomeController);
 
     // HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
-    HomeController.$inject = ['$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses', 'MotionCamera', 'MotionCameraPanTilt' ];
+    HomeController.$inject = [ '$http', '$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses', 'MotionCamera', 'MotionCameraPanTilt' ];
 
     // function HomeController ($scope, Principal, LoginService, $state) {
-    function HomeController ($scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses, MotionCamera, MotionCameraPanTilt ) {
+    function HomeController( $http, $scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses, MotionCamera, MotionCameraPanTilt ) {
         var vm = this;
 
         vm.account = null;
@@ -32,7 +32,24 @@
         //     $state.go('register');
         // }
 
-        vm.houses = Houses.data;
+        // vm.houses = Houses.data;
+        vm.houses = [];
+        loadAll();
+        function loadAll() {
+            // console.log( 'before Houses.jsonp' );
+            Houses.jsonp(function(result) {
+                vm.houses = result;
+                // console.log( 'vm.houses: ', vm.houses );
+                initCollapsedList();
+
+                client.connect({
+                    onSuccess: successCallback,
+                    onFailure: function() { console.log( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
+        });        
+
+            });
+            // console.log( 'after Houses.jsonp' );
+        }
 /*        //ahat: NOTE: use strings for json messages when publishing topics from mqtt devices with tokens and string literals in double quotes like '{"main": "OPEN", "recline":"CLOSED"}'
         vm.houses = [
             { 
@@ -277,22 +294,26 @@
 */
         // console.log( vm.houses );
         vm.isCollapsed = [];        
-        for( var i = 0 ; i < vm.houses.length ; i++ )
-        {            
-            vm.isCollapsed[i] = { 
-                house: true,
-                filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true, MOTION: true },
-                allChildrenExpanded: false,
-                showMqttTopics: false,
-                floor: []
-            };
-            for( var f  = 0 ; f < vm.houses[i].floors.length ; f++ )
-            {
-                vm.isCollapsed[i].floor[f] = { floor: true, room: [] };
-                // console.log( 'House[',i,'].floors[',f,']: ', vm.houses[i].floors[f] );
-                for( var r  = 0 ; r < vm.houses[i].floors[f].rooms.length ; r++ )
+
+        function initCollapsedList()
+        {
+            for( var i = 0 ; i < vm.houses.length ; i++ )
+            {            
+                vm.isCollapsed[i] = { 
+                    house: true,
+                    filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true, MOTION: true },
+                    allChildrenExpanded: false,
+                    showMqttTopics: false,
+                    floor: []
+                };
+                for( var f  = 0 ; f < vm.houses[i].floors.length ; f++ )
                 {
-                    vm.isCollapsed[i].floor[f].room[r] = { room: true };
+                    vm.isCollapsed[i].floor[f] = { floor: true, room: [] };
+                    // console.log( 'House[',i,'].floors[',f,']: ', vm.houses[i].floors[f] );
+                    for( var r  = 0 ; r < vm.houses[i].floors[f].rooms.length ; r++ )
+                    {
+                        vm.isCollapsed[i].floor[f].room[r] = { room: true };
+                    }
                 }
             }
         }
@@ -319,7 +340,7 @@
             }
         }
         
-        console.log( vm.isCollapsed );
+        // console.log( vm.isCollapsed );
 
         //MQTT
         var mqtt_broker_ip = '192.168.1.79';
@@ -328,10 +349,6 @@
         var client = MqttClient;
         client.observerDevices = [];
         client.init( mqtt_broker_ip, mqtt_broker_port, mqtt_client_id );
-        client.connect({
-            onSuccess: successCallback,
-            onFailure: function() { alert( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
-        });        
 
         client._client.onMessageArrived = function( message )
         {
@@ -347,7 +364,7 @@
             console.log( 'Connection lost with error: ', error, ' attempting to reconnect.' );
             client.connect( {
                 onSuccess: successCallback,
-                onFailure: function() { alert( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
+                onFailure: function() { console.log( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
             } );
         }
 

@@ -8,7 +8,7 @@
         <span class="glyphicon glyphicon-eye-open" ng-if="show"/>
         <span class="glyphicon glyphicon-eye-close" ng-if="!show"/>
     </button>
-    <span style="float:right;" ng-class="{'label-info': i.device.state == 'NO_MOTION', 'label-danger': i.device.state == 'MOTION_DETECTED' }">{{i.device.state.main}}</span>
+    <span style="float:right;" ng-class="{'label-info': i.device.state.main == 'NO_MOTION', 'label-danger': i.device.state.main == 'MOTION_DETECTED' }">{{i.device.state.main}}</span>
     <div class="state-container">        
         <!--
         ahat Note: using src will cause at first page load error

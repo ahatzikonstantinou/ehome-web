@@ -9,10 +9,10 @@
 
     function IPCameraPanTilt() {
         //Constructor
-        function IPCameraPanTilt( domain, videostream, right, left, up, down, stop )
+        function IPCameraPanTilt( baseUrl, videostream, right, left, up, down, stop )
         {
             //public properties
-            this.domain = domain; 
+            this.baseUrl = baseUrl; 
             this.videostream = videostream; 
             this.right = right; 
             this.left = left; 
@@ -21,12 +21,12 @@
             this.stop = stop;        
         }
 
-        function videoUrl() { return domain + videostream ; }
-        function rightUrl() { return domain + right ; }
-        function leftUrl() { return domain + left ; }
-        function upUrl() { return domain + up ; }
-        function downUrl() { return domain + down ; }
-        function stopUrl() { return domain + stop ; }
+        function videoUrl() { return baseUrl + videostream ; }
+        function rightUrl() { return baseUrl + right ; }
+        function leftUrl() { return baseUrl + left ; }
+        function upUrl() { return baseUrl + up ; }
+        function downUrl() { return baseUrl + down ; }
+        function stopUrl() { return baseUrl + stop ; }
 
         return IPCameraPanTilt;
     }
