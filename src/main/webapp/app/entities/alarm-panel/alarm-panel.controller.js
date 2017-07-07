@@ -21,9 +21,9 @@
         console.log( 'topic: ', topic);
 
         //MQTT
-        var mqtt_broker_ip = '192.168.1.79';
+        var mqtt_broker_ip = '192.168.1.11';
         var mqtt_broker_port = '1884';
-        var mqtt_client_id = 'eHomeWebGUI'
+        var mqtt_client_id = 'eHomeWebGUIAlarmPanel'
         var client = MqttClient;
         client.init( mqtt_broker_ip, mqtt_broker_port, mqtt_client_id );
         

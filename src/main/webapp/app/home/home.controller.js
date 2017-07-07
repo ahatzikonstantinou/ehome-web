@@ -343,8 +343,8 @@
         // console.log( vm.isCollapsed );
 
         //MQTT
-        var mqtt_broker_ip = '192.168.1.79';
-        var mqtt_broker_port = '1884';
+        var mqtt_broker_ip = '192.168.1.11';
+        var mqtt_broker_port = 1884;
         var mqtt_client_id = 'eHomeWebGUI'
         var client = MqttClient;
         client.observerDevices = [];
@@ -426,7 +426,7 @@
                     {
                         // console.log( 'No device property found!' );
                     }
-                    else
+                    else if( item.device.mqtt_subscribe_topic )
                     {
                         console.log( 'Subscribing ', item.device );
                         client.observerDevices.push( item.device );
