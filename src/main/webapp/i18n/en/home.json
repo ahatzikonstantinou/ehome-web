@@ -35,6 +35,14 @@
                 "true": "Active",
                 "false": "Inactive"
             }
+        },
+        "state": {
+            "UNAVAILABLE": "Unavailable",
+            "OPEN": "Open",
+            "CLOSED": "Closed",
+            "RECLINED": "Reclined",
+            "ON": "On",
+            "OFF": "Off"
         }
     }
 }

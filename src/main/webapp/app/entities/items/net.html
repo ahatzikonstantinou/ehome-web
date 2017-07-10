@@ -6,6 +6,6 @@
     <span class="mdi mdi-grid device-icon"/>{{i.name}}
     <span class="last-update">{{i.device.lastUpdate ? ( i.device.lastUpdate | date: 'dd/MM/yyyy HH:mm') : ''}}</span>
     <div class="state-container">
-        <span class="state" ng-class="{ 'warning': i.device.state.main == 'OPEN', 'info': i.device.state.main == 'CLOSED' }">{{i.device.state.main}}</span>
+        <span class="state" ng-class="{ 'warning': i.device.state.main == 'OPEN', 'info': i.device.state.main == 'CLOSED', 'unavailable': i.device.state.main == 'UNAVAILABLE' }" data-translate="{{'home.state.' + i.device.state.main}}">{{i.device.state.main}}</span>
     </div>
 </div>

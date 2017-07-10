@@ -18,15 +18,31 @@
         Light2.prototype = Object.create( MqttDevice.prototype );
         Light2.prototype.constructor = Light2;
 
-        Light2.prototype.switch = function( value )
+        Light2.prototype.switchLeft = function( value )
         {
             console.log( 'Light2 will send value ', value, ' to topic ', this.mqtt_publish_topic );
             if( this.publisher )
             {
-                var message = new Paho.MQTT.Message( value );
+                var message = new Paho.MQTT.Message( '{"left": "' + value + '"}' );
                 message.destinationName = this.mqtt_publish_topic ;
                 console.log( 'Light2 sending message: ', message );
                 this.publisher.send( message );
+
+                // this.state.left = value;//debugging
+            }
+        }
+
+        Light2.prototype.switchRight = function( value )
+        {
+            console.log( 'Light2 will send value ', value, ' to topic ', this.mqtt_publish_topic );
+            if( this.publisher )
+            {
+                var message = new Paho.MQTT.Message( '{"right": "' + value + '"}' );
+                message.destinationName = this.mqtt_publish_topic ;
+                console.log( 'Light2 sending message: ', message );
+                this.publisher.send( message );
+
+                // this.state.right = value;//debugging
             }
         }
 

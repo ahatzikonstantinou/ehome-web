@@ -27,6 +27,8 @@
                 message.destinationName = this.mqtt_publish_topic ;
                 console.log( 'Light1 sending message: ', message );
                 this.publisher.send( message );
+
+                // this.state.main = value;//debugging
             }
         }
 
