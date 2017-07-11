@@ -8,7 +8,19 @@
         <span class="glyphicon glyphicon-eye-open" ng-if="show"/>
         <span class="glyphicon glyphicon-eye-close" ng-if="!show"/>
     </button>
-    <span style="float:right;" ng-class="{'label-info': i.device.state.main == 'NO_MOTION', 'label-danger': i.device.state.main == 'MOTION_DETECTED' }">{{i.device.state.main}}</span>
+    <span class="last-update">{{i.device.lastUpdate ? ( i.device.lastUpdate | date: 'dd/MM/yyyy HH:mm') : ''}}</span>
+    <!--<span style="float:right;" ng-class="{'label-info': i.device.state.main == 'NO_MOTION', 'label-danger': i.device.state.main == 'MOTION_DETECTED' }">{{i.device.state.main}}</span>-->
+    <div style="float:right;">
+            <div>
+                <div class="state" ng-class="{ 'label-info': i.device.detection == 'NO_MOTION', 'label-danger': i.device.detection == 'MOTION_DETECTED' }" data-translate="{{'home.motion.detection.'+ i.device.detection}}"/>
+            </div>
+            <div style="margin-top:4px;">
+                <div class="state" ng-class="{ 'label-success': i.device.state == 'ACTIVE', 'label-info': i.device.state == 'PAUSED', 'label-danger': i.device.state == 'CAMERA_LOST', 'unavailable': i.device.state == 'UNAVAILABLE' }" data-translate="{{'home.motion.state.'+ i.device.state}}"/>
+            </div>
+    </div>
+    <button style="float:right;" type="button" class="btn btn-md btn-default" ng-click="i.device.getState()"><span class="glyphicon glyphicon-refresh"/></button>
+    <button ng-if="i.device.state == 'ACTIVE'" style="float:right;" type="button" class="btn btn-md btn-default" ng-click="i.device.pauseDetection()"><span class="glyphicon glyphicon-pause"/></button>
+    <button  ng-if="i.device.state == 'PAUSED'" style="float:right;" type="button" class="btn btn-md btn-default" ng-click="i.device.startDetection()"><span class="glyphicon glyphicon-play"/></button>
     <div class="state-container">        
         <!--
         ahat Note: using src will cause at first page load error
@@ -17,6 +29,6 @@
         Trying to solve this using ng-src is a bad solution because, although the error goes away, the img tag keeps downloading 
         from the specified url regardless of isCollapsedHouse || isCollapsedFloor || isCollapsedRoom
         -->
-        <img src="{{ !show || isCollapsedHouse || isCollapsedFloor || isCollapsedRoom ? '' : i.device.url }}" ng-show="show"/>
+        <img src="{{ !show || isCollapsedHouse || isCollapsedFloor || isCollapsedRoom ? '' : i.device.videostream }}" ng-show="show"/>
     </div>
 </div>

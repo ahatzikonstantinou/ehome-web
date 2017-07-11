@@ -28,12 +28,15 @@
             "UNAVAILABLE": "Unavailable"
         },
         "motion": {
-            "NO_MOTION": "No motion",
-            "MOTION_DETECTED": "Motion detected",
-            "CAMERA_LOST": "Camera lost",
-            "playing": { 
-                "true": "Active",
-                "false": "Inactive"
+            "detection": {
+                "NO_MOTION": "No motion",
+                "MOTION_DETECTED": "Motion"
+            },
+            "state": {
+                "CAMERA_LOST": "Camera lost",            
+                "ACTIVE": "Active",
+                "PAUSED": "Inactive",
+                "UNAVAILABLE": "Unavailable"
             }
         },
         "state": {

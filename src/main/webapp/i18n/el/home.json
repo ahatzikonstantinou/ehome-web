@@ -28,12 +28,15 @@
             "UNAVAILABLE": "Μη διαθέσιμος"
         },
         "motion": {
-            "NO_MOTION": "Ησυχία",
-            "MOTION_DETECTED": "Κίνηση",
-            "CAMERA_LOST": "Αποσυνδέθηκε",
-            "playing": { 
-                "true": "Ενεργή",
-                "false": "Ανενεργή"
+            "detection": {
+                "NO_MOTION": "Ησυχία",
+                "MOTION_DETECTED": "Κίνηση"
+            },
+            "state": {
+                "CAMERA_LOST": "Αποσυνδέθηκε",            
+                "ACTIVE": "Ενεργή",
+                "PAUSED": "Ανενεργή",
+                "UNAVAILABLE": "Μη διαθέσιμος"
             }
         },
         "state": {

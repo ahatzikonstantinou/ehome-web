@@ -109,10 +109,10 @@
                     item.device = new Light2( def.subscribe, def.publish, { left: 'UNAVAILABLE', right: 'UNAVAILABLE' } )
                     break;
                 case 'MOTIONCAMERA':
-                    item.device = new MotionCamera( def.url, def.subscribe, { main: 'UNAVAILABLE' } )
+                    item.device = new MotionCamera( def.subscribe, def.publish, def.cameraId, def.videostream, 'UNAVAILABLE', 'NO_MOTION' )
                     break;
                 case 'MOTIONCAMERAPANTILT':
-                    item.device = new MotionCameraPanTilt( def.subscribe, def.videostream, def.right, def.left, def.up, def.down, def.stop, def.startDetection, def.pauseDetection, def.detectionStatus, { main: 'UNAVAILABLE' } )
+                    item.device = new MotionCameraPanTilt( def.subscribe, def.publish, def.cameraId, def.videostream, 'UNAVAILABLE', 'NO_MOTION' )
                     break;
                 case 'ROLLER1':
                     item.device = new Roller1( def.subscribe, { main: 'UNAVAILABLE' } )
