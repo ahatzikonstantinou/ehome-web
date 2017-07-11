@@ -16,8 +16,8 @@
             //public properties
             this.cameraId = cameraId
             this.videostream = videostream; 
-            this.detection = detection;
-            this.stateRefreshInterval = null;
+            this.detection = detection;            
+            this.lastDetection = Date.now();
         }
 
         MotionCamera.prototype = Object.create( MqttDevice.prototype );
@@ -49,12 +49,13 @@
                     if( data.state )
                     {                        
                         this.state = data.state;
+                        this.lastUpdate = Date.now();
                     }
                     else if( data.detection )
                     {
                         this.detection = data.detection;
-                    }
-                    this.lastUpdate = Date.now();
+                        this.lastDetection = Date.now();
+                    }                    
                 }
             }
         }

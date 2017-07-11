@@ -17,6 +17,7 @@
             this.cameraId = cameraId
             this.videostream = videostream; 
             this.detection = detection;
+            this.lastDetection = Date.now();
         }
 
         MotionCameraPanTilt.prototype = Object.create( MqttDevice.prototype );
@@ -52,13 +53,14 @@
                     console.log( 'MotionCameraPanTilt[' + this.mqtt_subscribe_topic +']: this message is for me.' );
                     if( data.state )
                     {                        
-                        this.state = data.state;                        
+                        this.state = data.state;           
+                        this.lastUpdate = Date.now();             
                     }
                     else if( data.detection )
                     {
                         this.detection = data.detection;
+                        this.lastDetection = Date.now();
                     }
-                    this.lastUpdate = Date.now();
                 }
             }
         }
