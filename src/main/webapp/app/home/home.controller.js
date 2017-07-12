@@ -180,8 +180,9 @@
             }
         }
 
-        //MQTT
+        
 /*
+        //MQTT
         var mqtt_broker_ip = '192.168.1.11';
         var mqtt_broker_port = 1884;
         var mqtt_client_id = 'eHomeWebGUI'
