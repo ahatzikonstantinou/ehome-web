@@ -6,10 +6,10 @@
         .controller('HomeController', HomeController);
 
     // HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
-    HomeController.$inject = [ '$http', '$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses', 'MotionCamera', 'MotionCameraPanTilt' ];
+    HomeController.$inject = [ '$http', '$scope', '$state', 'MqttClient', 'Door1', 'Window1R', 'Light1', 'TemperatureHumidity', 'Door2R', 'Net', 'Roller1_Auto', 'Window2R', 'Roller1', 'Light2', 'Alarm', 'IPCamera', 'IPCameraPanTilt', 'Houses', 'MotionCamera', 'MotionCameraPanTilt', 'Configuration' ];
 
     // function HomeController ($scope, Principal, LoginService, $state) {
-    function HomeController( $http, $scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses, MotionCamera, MotionCameraPanTilt ) {
+    function HomeController( $http, $scope, $state, MqttClient, Door1, Window1R, Light1, TemperatureHumidity, Door2R, Net, Roller1_Auto, Window2R, Roller1, Light2, Alarm, IPCamera, IPCameraPanTilt, Houses, MotionCamera, MotionCameraPanTilt, Configuration ) {
         var vm = this;
 
         vm.account = null;
@@ -32,292 +32,41 @@
         //     $state.go('register');
         // }
 
-        // vm.houses = Houses.data;
         vm.houses = [];
-        loadAll();
-        function loadAll() {
-            // console.log( 'before Houses.jsonp' );
-            Houses.jsonp(function(result) {
-                vm.houses = result;
-                // console.log( 'vm.houses: ', vm.houses );
-                initCollapsedList();
-
-                client.connect({
-                    onSuccess: successCallback,
-                    onFailure: function() { console.log( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
-        });        
-
-            });
-            // console.log( 'after Houses.jsonp' );
-        }
-/*        //ahat: NOTE: use strings for json messages when publishing topics from mqtt devices with tokens and string literals in double quotes like '{"main": "OPEN", "recline":"CLOSED"}'
-        vm.houses = [
-            { 
-                name: 'Διαμέρισμα Αντώνη', 
-                floors: [ 
-                    { 
-                        name: '4ος', 
-                        rooms: [ 
-                            { 
-                                name: "Χωλ",
-                                items: [
-                                    { name: 'Πόρτα εισόδου', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', device: new Door1( 'A/4/H/DOOR/D', { main: 'OPEN' } ) },
-                                    { name: 'Παράθυρο φωταγωγού', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window1R( 'A/4/H/WINDOW/W', { main: 'OPEN', recline: 'CLOSED' } ) },
-                                    { name: 'Σίτα φωταγωγού', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/H/COVER/W', { main: 'CLOSED' } ) },
-                                    { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/H/LIGHT/LC/state', 'A/4/H/LC/set', { main: 'OFF' } ) },
-                                    { name: 'Εξωτερικό φως εισόδου', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/H/LIGHT/LO/state', 'A/4/H/LO/set', { main: 'OFF' } ) },                                    
-                                    { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERAPANTILT', protocol: 'http', device: new IPCameraPanTilt( 'http://192.168.1.79/webcam/', 'videostream.cgi?', 'decoder_control.cgi?command=6', 'decoder_control.cgi?command=4', 'decoder_control.cgi?command=0', 'decoder_control.cgi?command=2', 'decoder_control.cgi?command=1' )  },
-                                    { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/H/TH', { temperature: 25, humidity: 10 } ) }
-                                ]
-                            }, 
-                            { 
-                                name: "Σαλόνι",
-                                items: [
-                                    { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR2R', protocol: 'mqtt', device: new Door2R( 'A/4/L/DOOR/D', { left: 'CLOSED', right: 'OPEN', recline: 'CLOSED' } ) },
-                                    { name: 'Σίτα μπαλκονόπορτας', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/L/COVER/NB', { main: 'CLOSED' } ) },
-                                    { name: 'Ρολό μπαλκονόπορτας', domain: 'COVER', type: 'ROLLER1_AUTO', protocol: 'mqtt', device: new Roller1_Auto( 'A/4/L/COVER/RB/state', 'A/4/L/COVER/RB/set', { main: 'OPEN', percent: 10 } ) },
-                                    { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW2R', protocol: 'mqtt', device: new Window2R( 'A/4/L/WINDOW/W', { left: 'CLOSED', right: 'CLOSED', recline: 'OPEN' } ) },
-                                    { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/L/COVER/NW', { main: 'CLOSED' } ) },
-                                    { name: 'Ρολό παραθύρου', domain: 'COVER', type: 'ROLLER1', protocol: 'mqtt', device: new Roller1( 'A/4/L/COVER/RW', { main: 'CLOSED' } ) },
-                                    { name: 'Γυάλινος Πολυέλεος', domain: 'LIGHT', type: 'LIGHT2', protocol: 'mqtt', device: new Light2( 'A/4/L/LIGHT/GCH/state', 'A/4/L/LIGHT/GCH/set', { left: 'OFF', right: 'ON' } ) },
-                                    { name: 'Ξύλινος Πολυέλεος', domain: 'LIGHT', type: 'LIGHT2', protocol: 'mqtt',  device: new Light2( 'A/4/L/LIGHT/GCH/state', 'A/4/L/LIGHT/GCH/set', { left: 'OFF', right: 'OFF' } ) },
-                                    { name: 'Σποτ μπαλκονόπορτα', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/L/LIGHT/LD/state', 'A/4/L/LIGHT/LD/set', { main: 'OFF' } ) },
-                                    { name: 'Σποτ παραθύρου', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/L/LIGHT/LW/state', 'A/4/L/LIGHT/LW/set', { main: 'OFF' } ) },
-                                    { name: 'Εξωτερικό φως μπαλκονόπορτα', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt',device: new Light1( 'A/4/L/LIGHT/LOB/state', 'A/4/L/LIGHT/LOB/set', { main: 'OFF' } ) },
-                                    { name: 'Εξωτερικό φως παραθύρου', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/L/LIGHT/LOW/state', 'A/4/L/LIGHT/LOW/set', { main: 'OFF' } ) },
-                                    { name: 'Κάμερα 1', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http', device: new IPCamera( 'http://192.168.1.79/webcam' ) },
-                                    { name: 'Κάμερα 2', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http', device: new IPCamera( 'http://192.168.1.79/webcam' ) },
-                                    { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/L/TH', { temperature: 26, humidity: 10 } ) }
-                                ]
-                            }, 
-                            { 
-                                name: "Κουζίνα",
-                                items: [
-                                    { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', device: new Door1( 'A/4/K/DOOR/D', { main: 'OPEN' } ) },
-                                    { name: 'Παράθυρο νεροχύτη', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window1R( 'A/4/K/WINDOW/WS', { main: 'OPEN', recline: 'CLOSED' } ) },
-                                    { name: 'Σίτα παραθύρου νεροχύτη', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/K/COVER/NWS', { main: 'CLOSED' } ) },
-                                    { name: 'Παράθυρο φωταγωγού', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window2R( 'A/4/Κ/WINDOW/WL', { left: 'CLOSED', right: 'CLOSED', recline: 'OPEN' } ) },
-                                    { name: 'Σίτα παραθύρου φωταγωγού', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/K/COVER/NWL', { main: 'CLOSED' } ) },
-                                    { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/K/LIGHT/LB/state', 'A/4/K/LIGHT/LB/set', { main: 'OFF' } ) },
-                                    { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/K/LIGHT/LC/state', 'A/4/K/LIGHT/LC/set', { main: 'OFF' } ) },
-                                    { name: 'Φως φαγητού', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/K/LIGHT/LD/state', 'A/4/K/LIGHT/LD/set', { main: 'OFF' } ) },
-                                    { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http', device: new IPCamera( 'http://192.168.1.79/webcam' ) },
-                                    { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/K/TH', { temperature: 29, humidity: 18 } ) }
-                                ]
-                            }, 
-                            { 
-                                name: "Μπάνιο",
-                                items: [
-                                    { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', device: new Window1R( 'A/4/B/WINDOW/W', { main: 'OPEN', recline: 'CLOSED' } ) },
-                                    { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', device: new Net( 'A/4/B/COVER/NW', { main: 'CLOSED' } ) },
-                                    { name: 'Φως', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/B/LIGHT/L/state', 'A/4/B/LIGHT/L/set', { main: 'OFF' } ) },
-                                    { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/B/TH', { temperature: 32, humidity: 80 } ) }
-                                ]
-                            }, 
-                            { name: "WC", items: [ { name: 'Φως', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/WC/L/state', 'A/4/WC/L/set', { main: 'OFF' } ) } ] }, 
-                            { 
-                                name: "Κρεββατοκάμαρα",
-                                items: [
-                                    { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR2R', protocol: 'mqtt', device: new Door2R( 'A/4/BR/DOOR/D', { left: 'CLOSED', right: 'OPEN', recline: 'CLOSED' } ) },
-                                    { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/BR/LIGHT/LC/state', 'A/4/BR/LIGHT/LC/set', { main: 'OFF' } ) },
-                                    { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/BR/LIGHT/LB/state', 'A/4/BR/LIGHT/LB/set', { main: 'OFF' } ) },
-                                    { name: 'Σποτ', domain: 'LIGHT', type: 'LIGHT1', protocol: 'mqtt', device: new Light1( 'A/4/BR/LIGHT/LS/state', 'A/4/BR/LIGHT/LS/set', { main: 'OFF' } ) },
-                                    { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http', device: new IPCamera( 'http://192.168.1.79/webcam' ) },
-                                    { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/BR/TH', { temperature: 22, humidity: 11 } ) }
-                                ]
-                            }, 
-                            { 
-                                name: "Γραφείο",
-                                items: [
-                                    { name: 'Παράθυρο', domain: 'DOOR', type: 'WINDOW2R', protocol: 'mqtt', device: new Window2R( 'A/4/O/WINDOW/W', { left: 'CLOSED', right: 'CLOSED', recline: 'OPEN' } ) },
-                                    { name: 'Φως', domain: 'LIGHT', type: 'LIGHT2', protocol: 'mqtt', device: new Light2( 'A/4/O/LIGHT/L/state', 'A/4/O/LIGHT/L/set', { left: 'OFF', right: 'OFF' } ) },
-                                    { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http', device: new IPCamera( 'http://192.168.1.79/webcam' ) },
-                                    { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', device: new TemperatureHumidity( 'A/4/BR/TH', { temperature: 23, humidity: 10 } ) }
-                                ]
-                            } 
-                        ] 
-                    } 
-                ],
-                items: [ { name: 'Συναγερμός', domain: 'ALARM', type: 'ALARM', protocol: 'mqtt', device: new Alarm( 'A///ALARM/A/status', 'A///ALARM/A/set', { main: 'ACTIVATED', countdown: 13 } ) } ]
-            },
-            // { 
-            //     name: 'Διαμέρισμα Ειρήνης', 
-            //     floors: [ 
-            //         { 
-            //             name: '3ος', 
-            //             rooms: [ 
-            //                 { 
-            //                     name: "Χωλ",
-            //                     items: [
-            //                         { name: 'Πόρτα εισόδου', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'ON' },
-            //                         { name: 'Εξωτερικό φως εισόδου', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 22, humidity: 11 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Σαλόνι",
-            //                     items: [
-            //                         { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR2R', protocol: 'mqtt', state: { left: 'CLOSED', right: 'OPEN', recline: 'CLOSED' } },
-            //                         { name: 'Σίτα μπαλκονόπορτας', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Ρολό μπαλκονόπορτας', domain: 'COVER', type: 'ROLLER1', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Πολυέλεος 1/2', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Πολυέλεος 2/2', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 23, humidity: 10 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Τραπεζαρία",
-            //                     items: [
-            //                         { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW2R', protocol: 'mqtt', state: { left: 'CLOSED', right: 'CLOSED', recline: 'OPEN' } },
-            //                         { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Ρολό παραθύρου', domain: 'COVER', type: 'ROLLER1', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Πολυέλεος 1/2', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Πολυέλεος 2/2', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 24, humidity: 11 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Καθιστικό",
-            //                     items: [
-            //                         { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR2R', protocol: 'mqtt', state: { left: 'CLOSED', right: 'OPEN', recline: 'CLOSED' } },
-            //                         { name: 'Σίτα μπαλκονόπορτας', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Ρολό μπαλκονόπορτας', domain: 'COVER', type: 'ROLLER1', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 20, humidity: 10 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Κουζίνα",
-            //                     items: [
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 28, humidity: 23 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Μπάνιο",
-            //                     items: [
-            //                         { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', state: { main: 'OPEN', recline: 'CLOSED' } },
-            //                         { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 20, humidity: 17 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Κρεββατοκάμαρα",
-            //                     items: [
-            //                         { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', state: { main: 'CLOSED', recline: 'CLOSED' } },
-            //                         { name: 'Σίτα παραθύρου', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 24, humidity: 11 } }
-            //                     ]
-            //                 } 
-            //             ] 
-            //         } 
-            //     ],
-            //     items: [ { name: 'Συναγερμός', domain: 'ALARM', type: 'ALARM', protocol: 'mqtt' } ] 
-            // },
-            // { name: 'Εξοχικό Αλυκή', floors: [ 
-            //     { name: 'Ισόγειο', rooms: [ { name: 'Κουζίνα', items: [] }, { name: 'Σαλόνι', items: [] }, { name: 'Μπάνιο', items: [] } ] }, 
-            //     { name: '1ος', rooms: [ { name: 'Σαλόνι', items: [] }, { name: 'Μπάνιο', items: [] }, { name: 'WC', items: [] }, { name: 'Κρεββατοκάμαρα', items: [] }, { name: 'Κρεββατοκάμαρα παιδιών', items: [] }, { name: 'Κρεββατοκάμαρα Αθηνάς', items: [] }, { name: 'Κρεββατοκάμαρα δυτική', items: [] } ] } 
-            //     ] 
-            // },
-            // { 
-            //     name: 'Εταιρία', 
-            //     floors: [ 
-            //         { 
-            //             name: '1ος', 
-            //             rooms: [ 
-            //                 { 
-            //                     name: "Χωλ",
-            //                     items: [
-            //                         { name: 'Πόρτα εισόδου', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Εξωτερικό φως εισόδου', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'ON' },
-            //                         { name: 'Σποτ', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http' },
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Σαλόνι",
-            //                     items: [
-            //                         { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR2R', protocol: 'mqtt', state: { left: 'CLOSED', right: 'CLOSED', recline: 'CLOSED' } },
-            //                         { name: 'Σίτα μπαλκονόπορτας', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Ρολό μπαλκονόπορτας', domain: 'COVER', type: 'ROLLER1_AUTO', protocol: 'mqtt', state: { main: 'OPEN', percent: 10 } },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 27, humidity: 9 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Κουζίνα",
-            //                     items: [
-            //                         { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Παράθυρο διπλό', domain: 'WINDOW', type: 'WINDOW2R', protocol: 'mqtt', state: { left: 'CLOSED', right: 'CLOSED', recline: 'CLOSED' } },
-            //                         { name: 'Παράθυρο μονό', domain: 'WINDOW', type: 'WINDOW1R', protocol: 'mqtt', state: { main: 'CLOSED', recline: 'OPEN' } },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'ON' },
-            //                         { name: 'Σποτ', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 29, humidity: 36 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Μπάνιο",
-            //                     items: [
-            //                         { name: 'Παράθυρο', domain: 'WINDOW', type: 'WINDOW1', protocol: 'mqtt', state: 'OPEN' },
-            //                         { name: 'Φως', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 28, humidity: 35 } }
-            //                     ]
-            //                 }, 
-            //                 { 
-            //                     name: "Γραφείο",
-            //                     items: [
-            //                         { name: 'Μπαλκονόπορτα', domain: 'DOOR', type: 'DOOR1', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Σίτα μπαλκονόπορτας', domain: 'COVER', type: 'NET', protocol: 'mqtt', state: 'CLOSED' },
-            //                         { name: 'Ρολό μπαλκονόπορτας', domain: 'COVER', type: 'ROLLER1_AUTO', protocol: 'mqtt', state: { main: 'CLOSED', percent: 100 } },
-            //                         { name: 'Φως ταβάνι', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Φως μπαλκονιού', domain: 'LIGHT', type: 'LIGHT', protocol: 'mqtt', state: 'OFF' },
-            //                         { name: 'Κάμερα', domain: 'CAMERA', type: 'IPCAMERA', protocol: 'http' },
-            //                         { name: 'Θερμοκρασία', domain: 'CLIMATE', type: 'TEMPERATURE_HUMIDITY', protocol: 'mqtt', state: { temperature: 26, humidity: 27 } }
-            //                     ]
-            //                 } 
-            //             ] 
-            //         } 
-            //     ],
-            //     items: [ { name: 'Συναγερμός', domain: 'ALARM', type: 'ALARM', protocol: 'mqtt' } ]
-            // }
-        ];
-*/
+        
         // console.log( vm.houses );
         vm.isCollapsed = [];        
 
+        function createCollapsedHouse( house )
+        {
+            var collapsedHouse = { 
+                house: true,
+                filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true, MOTION: true },
+                allChildrenExpanded: false,
+                showMqttTopics: false,
+                floor: []
+            };
+            for( var f  = 0 ; f < house.floors.length ; f++ )
+            {
+                collapsedHouse.floor[f] = { floor: true, room: [] };
+                // console.log( 'House[',i,'].floors[',f,']: ', vm.houses[i].floors[f] );
+                for( var r  = 0 ; r < house.floors[f].rooms.length ; r++ )
+                {
+                    collapsedHouse.floor[f].room[r] = { room: true };
+                }
+            }
+            return collapsedHouse;
+        }
+
+/*
         function initCollapsedList()
         {
             for( var i = 0 ; i < vm.houses.length ; i++ )
             {            
-                vm.isCollapsed[i] = { 
-                    house: true,
-                    filter: { DOOR: true, WINDOW: true, LIGHT: true, CLIMATE: true, COVER: true, ALARM: true, CAMERA: true, MOTION: true },
-                    allChildrenExpanded: false,
-                    showMqttTopics: false,
-                    floor: []
-                };
-                for( var f  = 0 ; f < vm.houses[i].floors.length ; f++ )
-                {
-                    vm.isCollapsed[i].floor[f] = { floor: true, room: [] };
-                    // console.log( 'House[',i,'].floors[',f,']: ', vm.houses[i].floors[f] );
-                    for( var r  = 0 ; r < vm.houses[i].floors[f].rooms.length ; r++ )
-                    {
-                        vm.isCollapsed[i].floor[f].room[r] = { room: true };
-                    }
-                }
+                vm.isCollapsed[i] = createCollapsedHouse( vm.houses[i] );
             }
         }
-
+*/
         vm.expandAllChildren = function( house, expand )
         {
             for( var houseIndex = 0 ; houseIndex < vm.houses.length ; houseIndex++ )
@@ -342,17 +91,125 @@
         
         // console.log( vm.isCollapsed );
 
+        function getAllServers()
+        {
+            return [
+                {
+                    type: 'mqtt',
+                    settings: { 
+                        mqtt_broker_ip : '192.168.1.11',
+                        mqtt_broker_port : 1884,
+                        mqtt_client_id : 'eHomeWebGUI',
+                        configuration: {
+                            subscribeTopic: 'A///CONFIGURATION/C/status',
+                            publishTopic: 'A///CONFIGURATION/C/cmd'
+                        }
+                    },
+                    houses: []
+                }
+            ];
+        }
+        var servers = getAllServers();
+        initServers( servers );
+        function initServers( servers )
+        {
+            for( var i = 0 ; i < servers.length ; i++ )
+            {
+                var server = servers[i];
+                server.client = MqttClient;
+                var client = server.client;
+                client.observerDevices = [];
+                client.init( server.settings.mqtt_broker_ip, server.settings.mqtt_broker_port, server.settings.mqtt_client_id );
+                
+                client.connect({
+                    onSuccess: successCallback,
+                    onFailure: function() { console.log( 'Failed to connect to mqtt broker ', server.settings.mqtt_broker_ip, server.settings.mqtt_broker_port ); },
+                    invocationContext: server
+                });   
+
+                client._client.onMessageArrived = function( message )
+                {
+                    var server = this.connectOptions.invocationContext;
+                    console.log( server );
+                    console.log( 'Received [topic] "message": [', message.destinationName.trim(), '] "' );//, message.payloadString, '"' );
+                    if( message.destinationName == server.settings.configuration.subscribeTopic )
+                    {
+                        if( server.houses && server.houses.length > 0 )
+                        {
+                            unsubscribeHouses( server.client, server.houses );
+                            removeHouses( server.houses );
+                        }
+                        server.houses = Configuration.generateHousesList( angular.fromJson( message.payloadString ) );                        
+                        addHouses( server.houses );
+                        subscribeHouses( server.client, server.houses );
+                        return;
+                    }
+
+                    // if this is not a new houses-configuration message then it must be a message for the subscribed devices of the current house configuration
+                    for( var i = 0 ; i < server.client.observerDevices.length ; i++ )
+                    {
+                        // console.log( client.observerDevices[i] );
+                        $scope.$apply( function() { server.client.observerDevices[i].update( message.destinationName, message.payloadString ); } );
+                    }
+                }
+
+                client._client.onConnectionLost = function( error ) { 
+                    console.log( 'Connection lost with error: ', error, ' attempting to reconnect.' );
+                    client.connect( {
+                        onSuccess: successCallback,
+                        onFailure: function() 
+                        { 
+                            var server = invocationContext;
+                            console.log( 'Failed to connect to mqtt broker ', server.settings.mqtt_broker_ip, server.settings.mqtt_broker_port ); 
+                        }
+                    } );
+                }
+
+                function successCallback()
+                {
+                    var server = this.invocationContext;
+                    // console.log( server );
+                    console.log( 'Successfully connected to mqtt broker ', server.settings.mqtt_broker_ip, server.settings.mqtt_broker_port, ' subscribing to subscribeTopic...', server.settings.configuration.subscribeTopic );
+                    client.subscribe( server.settings.configuration.subscribeTopic );
+                    
+                    console.log( 'Will publish to publshTopic to get house-configuration...', server.settings.configuration.publishTopic );
+                    var message = new Paho.MQTT.Message( '{"cmd": "SEND"}' );
+                    message.destinationName = server.settings.configuration.publishTopic ;
+                    client.send( message );
+                }
+            }
+        }
+
         //MQTT
+/*
         var mqtt_broker_ip = '192.168.1.11';
         var mqtt_broker_port = 1884;
         var mqtt_client_id = 'eHomeWebGUI'
         var client = MqttClient;
         client.observerDevices = [];
         client.init( mqtt_broker_ip, mqtt_broker_port, mqtt_client_id );
+        
+        client.connect({
+            onSuccess: successCallback,
+            onFailure: function() { console.log( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
+        });   
 
         client._client.onMessageArrived = function( message )
         {
-            console.log( 'Received [topic] "message": [', message.destinationName.trim(), '] "', message.payloadString, '"' );
+            console.log( 'Received [topic] "message": [', message.destinationName.trim(), '] "' );//, message.payloadString, '"' );
+            if( message.destinationName == vm.houseConfigurationMqtt().subscribeTopic )
+            {
+                if( vm.houses && vm.houses.length > 0 )
+                {
+                    unsubscribeHouses( vm.houses );
+                }
+                vm.houses = Configuration.generateHousesList( angular.fromJson( message.payloadString ) );
+                initCollapsedList();
+                onNewConfiguration();
+                return;
+            }
+
+            // if this is not a new houses-configuration message then it must be a message for the subscribed devices of the current house configuration
             for( var i = 0 ; i < client.observerDevices.length ; i++ )
             {
                 // console.log( client.observerDevices[i] );
@@ -367,43 +224,128 @@
                 onFailure: function() { console.log( 'Failed to connect to mqtt broker ', mqtt_broker_ip, mqtt_broker_port ); }
             } );
         }
-
+*/
         function successCallback()
         {
-            console.log( 'Successfully connected to mqtt broker ', mqtt_broker_ip, mqtt_broker_port, ' subscribing to item topics...');
-            // subscribe to all topics
-            for( var h = 0 ; h < vm.houses.length ; h++ )
+            console.log( 'Successfully connected to mqtt broker ', mqtt_broker_ip, mqtt_broker_port, ' subscribing to vm.vm.houseConfigurationMqtt().subscribeTopic...', vm.houseConfigurationMqtt().subscribeTopic );
+            client.subscribe( vm.houseConfigurationMqtt().subscribeTopic );
+            
+            console.log( 'Will publish to vm.houseConfigurationMqtt().publshTopic to get house-configuration...', vm.houseConfigurationMqtt().publishTopic );
+            var message = new Paho.MQTT.Message( '{"cmd": "SEND"}' );
+            message.destinationName = vm.houseConfigurationMqtt().publishTopic ;
+            client.send( message );
+        }
+
+        function unsubscribeHouses( client, houses )
+        {
+            for( var h = 0 ; h < houses.length ; h++ )
             {
                 // console.log( 'Doing house "', vm.houses[h].name, '":' )
-                for( var f = 0 ; f < vm.houses[h].floors.length ; f++ )
+                for( var f = 0 ; f < houses[h].floors.length ; f++ )
                 {
                     // console.log( '\tfloor "', vm.houses[h].floors[f].name, '":' )
-                    for( var r = 0 ; r < vm.houses[h].floors[f].rooms.length ; r++ )
+                    for( var r = 0 ; r < houses[h].floors[f].rooms.length ; r++ )
                     {
                         // console.log( '\t\troom "', vm.houses[h].floors[f].rooms[r].name, '":' )
-                        for( var i = 0 ; i < vm.houses[h].floors[f].rooms[r].items.length ; i++ )
+                        for( var i = 0 ; i < houses[h].floors[f].rooms[r].items.length ; i++ )
                         {
-                            if( vm.houses[h].floors[f].rooms[r].items[i].protocol = 'mqtt' )
+                            if( houses[h].floors[f].rooms[r].items[i].protocol = 'mqtt' )
                             {
-                                subscribe( vm.houses[h].floors[f].rooms[r].items[i] );
+                                unsubscribe( client, houses[h].floors[f].rooms[r].items[i] );
                             }
                         }
                     }
                 }
-                if( vm.houses[h].items )
+                if( houses[h].items )
                 {
-                    for( var i = 0 ; i < vm.houses[h].items.length ; i++ )
+                    for( var i = 0 ; i < houses[h].items.length ; i++ )
                     {
-                        if( vm.houses[h].items[i].protocol = 'mqtt' )
+                        if( houses[h].items[i].protocol = 'mqtt' )
                         {
-                            subscribe( vm.houses[h].items[i] );
+                            unsubscribe( client, houses[h].items[i] );
+                        }
+                    }
+                }
+            }
+            client.observerDevices = [];
+        }
+
+        function removeHouses( houses )
+        {
+            for( var rm = 0 ; rm < houses.length ; rm++ )
+            {
+                for( var h = 0 ; h < vm.houses.length ; h++ )
+                {
+                    if( vm.houses[h].name == houses[rm].name )
+                    {
+                        console.log( 'removing house ', houses[rm].name );
+                        vm.houses.splice( h, 1 );
+                    }
+                }
+            }
+        }
+
+        function addHouses( houses )
+        {
+            var add = houses.sort( function( a, b ) { return a.name.localeCompare( b.name ); } );
+            for( var a = 0 ; a < add.length ; a++ )
+            {
+                var added = false;
+                for( var h = 0 ; h < vm.houses ; h++ )
+                {
+                    if( a.name.localeCompare( vm.houses[h].name ) > 0 )
+                    {
+                        vm.houses.splice( h, 0, add[a] );
+                        vm.isCollapsed.splice( h, 0, createCollapsedHouse( add[a] ) );
+                        added = true;
+                        break;
+                    }
+                }
+                if( !added )
+                {
+                    vm.houses.push( add[a] );
+                    vm.isCollapsed.push( createCollapsedHouse( add[a] ) );
+                }
+                console.log( 'added house ', add[a] );
+
+            }
+        }
+
+        function subscribeHouses( client, houses )
+        {
+            // subscribe to all topics
+            for( var h = 0 ; h < houses.length ; h++ )
+            {
+                // console.log( 'Doing house "', vm.houses[h].name, '":' )
+                for( var f = 0 ; f < houses[h].floors.length ; f++ )
+                {
+                    // console.log( '\tfloor "', vm.houses[h].floors[f].name, '":' )
+                    for( var r = 0 ; r < houses[h].floors[f].rooms.length ; r++ )
+                    {
+                        // console.log( '\t\troom "', vm.houses[h].floors[f].rooms[r].name, '":' )
+                        for( var i = 0 ; i < houses[h].floors[f].rooms[r].items.length ; i++ )
+                        {
+                            if( houses[h].floors[f].rooms[r].items[i].protocol = 'mqtt' )
+                            {
+                                subscribe( client, houses[h].floors[f].rooms[r].items[i] );
+                            }
+                        }
+                    }
+                }
+                if( houses[h].items )
+                {
+                    for( var i = 0 ; i < houses[h].items.length ; i++ )
+                    {
+                        if( houses[h].items[i].protocol = 'mqtt' )
+                        {
+                            subscribe( client, houses[h].items[i] );
                         }
                     }
                 }
             }
         }
 
-        function subscribe( item )
+        function subscribe( client, item )
         {
             // console.log( '\t\titem:', item );
             switch( item.type )
@@ -454,5 +396,41 @@
                     break;
             }
         }
+
+        function unsubscribe( client, item )
+        {
+            // console.log( '\t\titem:', item );
+            switch( item.type )
+            {
+                case 'ALARM':
+                case 'NET':
+                case 'DOOR1':
+                case 'DOOR2R':
+                case 'LIGHT1':
+                case 'LIGHT2':
+                case 'MOTIONCAMERA':
+                case 'MOTIONCAMERAPANTILT':
+                case 'ROLLER1':
+                case 'ROLLER1_AUTO':
+                case 'TEMPERATURE_HUMIDITY':
+                case 'WINDOW1':
+                case 'WINDOW1R':
+                case 'WINDOW2R':
+                    if( !item.device )
+                    {
+                        // console.log( 'No device property found!' );
+                    }
+                    else if( item.device.mqtt_subscribe_topic )
+                    {
+                        // console.log( 'Subscribing ', item.device );
+                        client.unsubscribe( item.device.mqtt_subscribe_topic );
+                    }
+                    break;
+                default: 
+                    // console.log( 'Unknown item type [', item.type, ']' );
+                    break;
+            }
+        }
+
     }
 })();

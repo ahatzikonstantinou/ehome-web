@@ -47,10 +47,10 @@
             if( topic == this.mqtt_subscribe_topic )
             {
                 var data = angular.fromJson( message );
-                console.log( 'motion-data:',  data );
+                // console.log( 'motion-data:',  data );
                 if( data.camera == this.cameraId )
                 {
-                    console.log( 'MotionCameraPanTilt[' + this.mqtt_subscribe_topic +']: this message is for me.' );
+                    // console.log( 'MotionCameraPanTilt[' + this.mqtt_subscribe_topic +']: this message is for me.' );
                     if( data.state )
                     {                        
                         this.state = data.state;           
